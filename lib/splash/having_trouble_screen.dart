@@ -3,6 +3,10 @@ import 'package:tutorial/constants.dart';
 import 'package:tutorial/splash/button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//TODO: Add email sending by making email address tappable
+//TODO: Deal with spacing and make uniform
+//TODO: Figure out Poppins font and what is going wrong
+
 class HavingTroubleScreen extends StatelessWidget {
   const HavingTroubleScreen({super.key});
 

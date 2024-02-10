@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/splash/button.dart';
-import 'package:tutorial/splash/having_trouble_screen.dart';
 
 import 'track_er_screen.dart';
 

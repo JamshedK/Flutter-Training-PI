@@ -3,6 +3,9 @@ import '../constants.dart';
 import 'button.dart';
 import 'having_trouble_screen.dart';
 
+//TODO: Make Code more readable using functions, getters, arrow functions, etc.
+//TODO: Deal with spacing and make uniform
+
 
 class TrackErScreen extends StatelessWidget {
   const TrackErScreen({super.key});
@@ -27,7 +30,10 @@ class TrackErScreen extends StatelessWidget {
               ),
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Welcome to our cutting edge platform where you can effortlessly be informed about you or your loved ones care in the Emergency Department. We provide real time updates to your care so you can be at ease knowing the clinical staff are here to take great care of you.", 
+                child: Text("Welcome to our cutting edge platform where you can effortlessly be "
+                            "informed about you or your loved ones care in the Emergency Department."
+                            "We provide real time updates to your care so you can be at ease knowing"
+                            " the clinical staff are here to take great care of you.", 
                   style: TextStyle(color: Color(0xFF9B9B9B), fontSize: 16, fontWeight: FontWeight.w400),
                 ),
               ),
