@@ -54,6 +54,5 @@ class HavingTroubleScreen extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
