@@ -129,15 +129,98 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                 ),
               ),
-              Text('or continue with', textAlign: TextAlign.center),
-              Text('social row'),
-              Text('already have an account? sign in'),
+              const SizedBox(height: 32),
+              const Text(
+                'or continue with',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: primaryColor,
+                  height: 1.5,
+                ),
+              ),
+              const SizedBox(height: 32),
+              _createWithSocialRow,
+              const SizedBox(height: 48),
+              _alreadyHaveAccountRow,
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget get _createWithSocialRow => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: () {
+              print('create with google');
+            },
+            iconSize: 78,
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+              side: MaterialStateProperty.all(const BorderSide(color: Color(0x33000000))),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            icon: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Image.asset(
+                'assets/google_logo.png',
+                height: 30,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          IconButton(
+            onPressed: () {
+              print('create with facebook');
+            },
+            iconSize: 78,
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+              side: MaterialStateProperty.all(const BorderSide(color: Color(0x33000000))),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            icon: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Image.asset(
+                'assets/facebook_logo.png',
+                height: 30,
+              ),
+            ),
+          ),
+        ],
+      );
+
+  Widget get _alreadyHaveAccountRow => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'Already have an account?',
+            style: TextStyle(fontSize: 14),
+          ),
+          TextButton(
+            onPressed: () {
+              print('go to sign in');
+            },
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(const Color(0xFF0E0E0E)),
+              textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
+            ),
+            child: const Text('Sign in'),
+          ),
+        ],
+      );
 }
 
 class _FormBox extends StatefulWidget {
@@ -196,8 +279,8 @@ class _FormBoxState extends State<_FormBox> {
                       _isCurrentlyObscured = !_isCurrentlyObscured;
                     });
                   },
-                  icon: const Icon(
-                    Icons.remove_red_eye_outlined,
+                  icon: Icon(
+                    _isCurrentlyObscured ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                     color: primaryColor,
                   ),
                 )
