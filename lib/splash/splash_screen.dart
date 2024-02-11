@@ -29,10 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: MostlyRoundedButton(
                   buttonText: 'Next',
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const TrackErScreen()), //Change to track er later
-                    );
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return const TrackErScreen();
+                    }));
                   },
                 ),
               ),
