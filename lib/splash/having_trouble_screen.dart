@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
+import 'package:tutorial/form_example.dart';
 import 'package:tutorial/splash/button.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+//TODO: Add email sending by making email address tappable
 
 class HavingTroubleScreen extends StatelessWidget {
   const HavingTroubleScreen({super.key});
@@ -15,44 +17,52 @@ class HavingTroubleScreen extends StatelessWidget {
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.9,
-          heightFactor: 0.8,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Spacer(flex: 5),
-              Image.asset('assets/havingtrouble.png'),
-              const Spacer(flex: 22),
-              Align(
-                alignment: Alignment.centerLeft,
-                  child: Text('Having trouble with the app',
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600))),
-                  ),
               const Spacer(flex: 2),
-              Align(
-                alignment: Alignment.centerLeft,
-                  child: Text('We want to know about it. Please send an email to support@patientinform.com and we will be in contact shortly.',
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400, color: Color(0xff9B9B9B))), )
-                  ),
-              const Spacer(flex: 10),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: MostlyRoundedButton(
-                  buttonText: 'Next',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HavingTroubleScreen()), //Change to track er later
-                    );
-                  },
-                ),
-              ),
-              const Spacer(flex: 3),
+              Image.asset('assets/havingtrouble.png'),
+              const Spacer(flex: 4),
+              _textFields,
+              const Spacer(flex: 6),
+              _buttonRow(context),
+              const Spacer(flex: 2),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget _buttonRow(BuildContext context) =>
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        const SkipButton(),
+        MostlyRoundedButton(
+          buttonText: "Next",
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return const SignUpForm();
+            }));
+          },
+        ),
+      ]);
+
+  Widget get _textFields => const Column(children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Having trouble with the app",
+            style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600),
+          ),
+        ),
+        SizedBox(height: 16),
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'We want to know about it. Please send an email to support@patientinform.com and we will be in contact shortly.',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xff9B9B9B)),
+            )),
+      ]);
 }

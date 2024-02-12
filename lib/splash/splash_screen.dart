@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/splash/button.dart';
-import 'package:tutorial/splash/having_trouble_screen.dart';
 
 import 'track_er_screen.dart';
 
@@ -30,10 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: MostlyRoundedButton(
                   buttonText: 'Next',
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const TrackErScreen()), //Change to track er later
-                    );
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return const TrackErScreen();
+                    }));
                   },
                 ),
               ),

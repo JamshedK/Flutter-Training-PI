@@ -1,5 +1,6 @@
+// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'splash/splash_screen.dart';
+import 'package:tutorial/splash/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
