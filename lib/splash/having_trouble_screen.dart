@@ -50,7 +50,7 @@ class HavingTroubleScreen extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            "Having trouble with the app",
+            "Having trouble with the app?",
             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600),
           ),
         ),
