@@ -1,40 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_box.dart';
-//
-import 'package:tutorial/form_login.dart';
-import 'package:tutorial/form_personal_details.dart';
-// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
-
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({super.key});
+class PersonalForm extends StatefulWidget {
+  const PersonalForm({super.key});
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  State<PersonalForm> createState() => _PersonalFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _PersonalFormState extends State<PersonalForm> {
   @override
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-    _confirmPasswordController = TextEditingController();
+    _firstNameController = TextEditingController();
+    _lastNameController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
 
     super.dispose();
   }
 
-  late TextEditingController _emailController;
-  late TextEditingController _passwordController;
-  late TextEditingController _confirmPasswordController;
+  late TextEditingController _firstNameController;
+  late TextEditingController _lastNameController;
 
   String _emailError = '';
 
@@ -52,7 +41,7 @@ class _SignUpFormState extends State<SignUpForm> {
             children: [
               Image.asset('assets/logo.png'),
               const Text(
-                'Create Account',
+                'Enter Personal Details',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: primaryColor,
@@ -62,15 +51,14 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ),
               const Text(
-                'Fill in the information below to sign up',
+                'Enter personal information below',
                 style: TextStyle(color: primaryColor, fontSize: 16),
               ),
               const SizedBox(height: 32),
               FormBox(
                 icon: Icons.email_outlined,
                 hintText: 'Email',
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
+                controller: _firstNameController,
               ),
               if (_emailError.isNotEmpty) ...[
                 const SizedBox(height: 16),
@@ -84,26 +72,24 @@ class _SignUpFormState extends State<SignUpForm> {
                 icon: Icons.lock_outline_rounded,
                 hintText: 'Password',
                 obscureText: true,
-                controller: _passwordController,
-                keyboardType: TextInputType.visiblePassword,
+                controller: _lastNameController,
               ),
               const SizedBox(height: 16),
-              FormBox(
-                icon: Icons.lock_outline_rounded,
-                hintText: 'Confirm Password',
-                obscureText: true,
-                controller: _confirmPasswordController,
-                keyboardType: TextInputType.visiblePassword,
-              ),
+//              FormBox(
+//                icon: Icons.lock_outline_rounded,
+//                hintText: 'Confirm Password',
+//                obscureText: true,
+//                controller: _confirmPasswordController,
+//              ),
               const SizedBox(height: 16),
-              if (_passwordController.text !=
-                  _confirmPasswordController.text) ...[
-                const Text(
-                  'Passwords do not match',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
-                ),
-                const SizedBox(height: 16),
-              ],
+//              if (_lastNameController.text !=
+//                  _confirmPasswordController.text) ...[
+//                const Text(
+//                  'Passwords do not match',
+//                  style: TextStyle(color: Colors.red, fontSize: 16),
+//                ),
+//                const SizedBox(height: 16),
+//              ],
               _createSignUpButton,
               const SizedBox(height: 32),
               const Text(
@@ -125,7 +111,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Widget get _createSignUpButton => TextButton(
         onPressed: () {
-          if (_emailController.text.isEmpty) {
+          if (_firstNameController.text.isEmpty) {
             setState(() {
               _emailError = 'Email cannot be empty';
             });
@@ -135,12 +121,7 @@ class _SignUpFormState extends State<SignUpForm> {
             });
           }
           print(
-              'sign up with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-//!!!!!!!!!!!! Use this button for testing different screens (default: PersonalForm)
-              return const PersonalForm();
-              //return const ResetPasswordForm();
-          }));
+              'first/last name: "${_firstNameController.text}"/"${_lastNameController.text}"');
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
@@ -217,9 +198,6 @@ class _SignUpFormState extends State<SignUpForm> {
           TextButton(
             onPressed: () {
               print('sign in');
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return const LoginForm();
-              }));
             },
             style: ButtonStyle(
               foregroundColor:
