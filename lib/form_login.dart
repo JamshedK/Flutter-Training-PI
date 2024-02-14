@@ -52,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
               Image.asset('assets/logo.png'),
               const Text(
                 'Login to Account',
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 26,
@@ -230,15 +230,15 @@ class _LoginFormState extends State<LoginForm> {
             },
             style: ButtonStyle(
               foregroundColor:
-                  MaterialStateProperty.all(const Color(0xFF0E0E0E)),
+                  MaterialStateProperty.all(const Color(0xFFFF5C00)),
               textStyle: MaterialStateProperty.all(
                 const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),
-            child: const Text('Forgot your password?'),
+            child: const Text('Forgot password?'),
           ),
         ],
       );
