@@ -109,7 +109,7 @@ class _PersonalFormState extends State<PersonalForm> {
                 icon: Icons.calendar_month_outlined,
                 hintText: 'Date Of Birth',
                 controller: _dateOfBirthController,
-                keyboardType: TextInputType.name, // FIXME: not specific enough?
+                keyboardType: TextInputType.number,
               ),
               // DATE OF BIRTH ERROR
               if (_dateOfBirthError.isNotEmpty) ...[

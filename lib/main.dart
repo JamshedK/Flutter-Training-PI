@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(fontFamily: 'Poppins'),
+      debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
     );
   }
