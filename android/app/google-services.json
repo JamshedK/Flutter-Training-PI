@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997688084433",
+    "project_id": "patient-inform",
+    "storage_bucket": "patient-inform.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997688084433:android:5c8cfb7b42bab04f2182f0",
+        "android_client_info": {
+          "package_name": "com.example.tutorial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-BZOS1H7Brnh1qXCezjM4Iva4eSlxlOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

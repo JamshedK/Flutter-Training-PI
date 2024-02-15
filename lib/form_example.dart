@@ -139,7 +139,11 @@ class _SignUpFormState extends State<SignUpForm> {
 
           authHandler.handleSignInEmail(emailController.text, passwordController.text)
             .then<void>((User user) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const SplashScreen()));
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute<void>(builder: (context) => const SplashScreen()),
+                (Route<dynamic> route) => false,
+              );
             }).catchError((e) => print(e));
 
         },
