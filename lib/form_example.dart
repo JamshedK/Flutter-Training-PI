@@ -53,7 +53,7 @@ class _SignUpFormState extends State<SignUpForm> {
               Image.asset('assets/logo.png'),
               const Text(
                 'Create Account',
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 26,

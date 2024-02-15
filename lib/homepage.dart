@@ -9,7 +9,7 @@ class Homepage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Hello, Daniel! :)"),
+          title: const Text("Hello, Daniel!! :)"),
         ),
         bottomNavigationBar: BottomNavigationBar(items: const [
           BottomNavigationBarItem(
@@ -24,6 +24,7 @@ class Homepage extends StatelessWidget {
             icon: Icon(Icons.bakery_dining_sharp), 
             label: 'bread!',
           ),
+          
         ]),
       )
     );

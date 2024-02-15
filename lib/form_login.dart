@@ -52,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
               Image.asset('assets/logo.png'),
               const Text(
                 'Login to Account',
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 26,
@@ -119,9 +119,11 @@ class _LoginFormState extends State<LoginForm> {
           }
           print(
               'login with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) {
               return const Homepage();
-          }));
+          },
+          ),(Route<dynamic> route) => false,
+          );
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
