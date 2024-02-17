@@ -4,6 +4,7 @@ import 'package:tutorial/form_box.dart';
 import 'package:tutorial/form_example.dart';
 import 'package:tutorial/form_reset_password.dart';
 import 'package:tutorial/homepage.dart';
+import 'package:tutorial/user_auth.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -19,23 +20,23 @@ class _LoginFormState extends State<LoginForm> {
 
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _confirmPasswordController = TextEditingController();
   }
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
 
     super.dispose();
   }
 
-  late TextEditingController _emailController;
-  late TextEditingController _passwordController;
-  late TextEditingController _confirmPasswordController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
 
   String _emailError = '';
+  String _passwordError = '';
+
+  var authHandler = UserAuth();
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +87,7 @@ class _LoginFormState extends State<LoginForm> {
                 controller: _passwordController,
                 keyboardType: TextInputType.visiblePassword,
               ),
+              //TODO: Add Empty Password Error
               _forgotPasswordRow,
               _createLoginButton,
               const SizedBox(height: 24),
@@ -107,23 +109,47 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget get _createLoginButton => TextButton(
-        onPressed: () {
-          if (_emailController.text.isEmpty) {
+        onPressed: () async {
+          
+        //TODO: Revisit error handling for email and password
+          if (_emailController.text.isEmpty && _passwordController.text.isEmpty) {
             setState(() {
               _emailError = 'Email cannot be empty';
+              _passwordError = 'Password cannot be empty';
             });
-          } else {
+            return;
+          } else if (_emailController.text.isEmpty) {
             setState(() {
+              _emailError = 'Email cannot be empty';
+              _passwordError = '';
+            });
+            return;
+          } else if (_passwordController.text.isEmpty) {
+            setState(() {
+              _passwordError = 'Password cannot be empty';
               _emailError = '';
             });
+            return;
+          } 
+          setState(() {
+            _emailError = '';
+            _passwordError = '';
+          });
+          
+          try {
+            final user = await authHandler.handleSignInEmail(_emailController.text, _passwordController.text);
+            if(!mounted){
+              return;
+            }
+            Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute<void>(builder: (context) => const Homepage()),
+                  (Route<dynamic> route) => false,
+            );
+          } on Exception catch (e) {
+            print(e);
           }
-          print(
-              'login with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) {
-              return const Homepage();
-          },
-          ),(Route<dynamic> route) => false,
-          );
+
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),

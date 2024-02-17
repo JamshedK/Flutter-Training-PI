@@ -16,7 +16,9 @@ class TrackErScreen extends StatelessWidget {
         child: FractionallySizedBox(
           widthFactor: 0.9,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
+            //TODO: Change Spacers into Sized Boxes, then add SingleChildScrollView
               const Spacer(flex: 2),
               Image.asset('assets/ER_Group.png'),
               const Spacer(flex: 1),
