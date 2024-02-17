@@ -3,7 +3,7 @@ import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_example.dart';
 import 'package:tutorial/splash/button.dart';
 
-//TODO: Add email sending by making email address tappable
+// TODO: Add email sending by making email address tappable
 
 class HavingTroubleScreen extends StatelessWidget {
   const HavingTroubleScreen({super.key});
@@ -50,7 +50,7 @@ class HavingTroubleScreen extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            "Having trouble with the app",
+            "Having trouble with the app?",
             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600),
           ),
         ),

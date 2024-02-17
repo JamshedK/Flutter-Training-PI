@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tutorial/constants.dart';
 
 class FormBox extends StatefulWidget {
@@ -7,6 +8,8 @@ class FormBox extends StatefulWidget {
     required this.icon,
     required this.hintText,
     this.controller,
+    required this.keyboardType,
+    //required this.inputFormatters,
     this.obscureText = false,
   });
 
@@ -14,6 +17,9 @@ class FormBox extends StatefulWidget {
   final IconData icon;
   final String hintText;
   final TextEditingController? controller;
+
+  final TextInputType keyboardType;
+  //final TextInputFormatter inputFormatters;
 
   @override
   State<FormBox> createState() => FormBoxState();
@@ -32,6 +38,7 @@ class FormBoxState extends State<FormBox> {
       padding: const EdgeInsets.all(12),
       child: TextField(
         controller: widget.controller,
+        keyboardType: widget.keyboardType, //! DY: NEW
         obscureText: widget.obscureText && _isCurrentlyObscured,
         style: const TextStyle(
           color: primaryColor,
