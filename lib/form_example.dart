@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_box.dart';
-//
 import 'package:tutorial/form_login.dart';
 import 'package:tutorial/form_personal_details.dart';
-// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:tutorial/splash/splash_screen.dart';
+//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:tutorial/user_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -37,6 +40,7 @@ class _SignUpFormState extends State<SignUpForm> {
   late TextEditingController _confirmPasswordController;
 
   String _emailError = '';
+  var authHandler = UserAuth();
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +108,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 const SizedBox(height: 16),
               ],
-              _createSignUpButton,
+              _createSignUpButton(context, _emailController, _passwordController),
               const SizedBox(height: 32),
               const Text(
                 'Or Continue With',
@@ -123,7 +127,8 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  Widget get _createSignUpButton => TextButton(
+  Widget _createSignUpButton(context, emailController, passwordController) =>
+     TextButton(
         onPressed: () {
           if (_emailController.text.isEmpty) {
             setState(() {
@@ -141,6 +146,15 @@ class _SignUpFormState extends State<SignUpForm> {
               return const PersonalForm();
               //return const ResetPasswordForm();
           }));
+
+//           authHandler.handleSignInEmail(emailController.text, passwordController.text)
+//             .then<void>((User user) {
+//               Navigator.pushAndRemoveUntil(
+//                 context,
+//                 MaterialPageRoute<void>(builder: (context) => const PersonalForm()),
+//                 (Route<dynamic> route) => false,
+//               );
+//             }).catchError((e) => print(e));
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
