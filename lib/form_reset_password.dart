@@ -59,7 +59,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               const SizedBox(height: 32),
               FormBox(
                 icon: Icons.email_outlined,
-                hintText: 'Email',
+                hintText: 'e.g jhondoe@gmail.com',
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -99,7 +99,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
         child: const Padding(
           padding: EdgeInsets.all(16),
           child: Text(
-            'Wahoo!!',
+            'Send Email',
             style: TextStyle(fontSize: 16, height: 1.5),
           ),
         ),
