@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_box.dart';
+import 'package:tutorial/form_helpers.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   const ResetPasswordForm({super.key});
@@ -62,13 +63,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
-              if (_emailError.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                Text(
-                  _emailError,
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ],
+              ...FormHelpers.checkError(_emailError),
               const SizedBox(height: 16),
               _createSignUpButton,
             ],
