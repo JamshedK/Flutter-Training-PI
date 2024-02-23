@@ -3,10 +3,8 @@ import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_box.dart';
 import 'package:tutorial/form_login.dart';
 import 'package:tutorial/form_personal_details.dart';
-import 'package:tutorial/splash/splash_screen.dart';
 //import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:tutorial/user_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 
 class SignUpForm extends StatefulWidget {
