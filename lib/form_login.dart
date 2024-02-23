@@ -146,7 +146,7 @@ class _LoginFormState extends State<LoginForm> {
                   MaterialPageRoute<void>(builder: (context) => const Homepage()),
                   (Route<dynamic> route) => false,
             );
-          } on Exception catch (e) {
+          } catch (e) {
             print(e);
           }
 
