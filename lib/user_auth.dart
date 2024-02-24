@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class UserAuth {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -19,3 +20,32 @@ class UserAuth {
     return user;
   }
 }
+
+Future<User?> signInWithGoogle() async {
+final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: '997688084433-qiahs2fdcekq042vg9k7dl7mebo58v7d.apps.googleusercontent.com',
+    );
+
+    // Attempt to sign in the user with Google
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    print('sign in with google');
+
+    // Obtain the authentication tokens from the Google sign-in process
+    final GoogleSignInAuthentication? googleAuth = await googleUser!.authentication;
+   
+
+    // Create a new credential for signing in with Firebase
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth!.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Sign in with Firebase using the Google credential
+    final UserCredential result = await FirebaseAuth.instance.signInWithCredential(credential);
+    final User? user = result.user;
+
+    // Return the signed-in Firebase user
+    return user;
+  } 
+
+
