@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
 
+// TODO: when timer is set up, add ternary conditional to return plurals (e.g. "Hours" instead of "Hour")
+final List<String> timeUnits = ['Day', 'Hour', 'Min', 'Sec'];
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -27,7 +30,6 @@ class _HomepageState extends State<Homepage> {
               currentPageIndex = index;
             });
           },
-          // indicatorColor: primaryColor,
           selectedIndex: currentPageIndex,
           destinations: const <Widget>[
             NavigationDestination(
@@ -75,9 +77,9 @@ class HomeScreen1 extends StatelessWidget {
             style: TextStyle(color: primaryTextColor, fontSize: 14),
             children: [
               //TODO: when user is signed in, display their name
-              TextSpan(text: "Welcome Back,\n"),
+              TextSpan(text: 'Welcome Back,\n'),
               TextSpan(
-                  text: "Daniel",
+                  text: 'Daniel',
                   style: TextStyle(
                       height: 1.5, fontWeight: FontWeight.bold, fontSize: 22)),
             ],
@@ -87,12 +89,12 @@ class HomeScreen1 extends StatelessWidget {
           IconButton(
               icon: const Icon(Icons.notifications, color: primaryColor),
               onPressed: () {
-                print("notification");
+                print('notification');
               }),
           IconButton(
               icon: const Icon(Icons.menu, color: primaryColor),
               onPressed: () {
-                print("open side menu");
+                print('open side menu');
               })
         ],
       ),
@@ -110,7 +112,7 @@ class HomeScreen1 extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text("Current Visit",
+                      const Text('Current Visit',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -119,27 +121,27 @@ class HomeScreen1 extends StatelessWidget {
                             height: 1.5,
                           )),
                       const SizedBox(height: 8),
-                      const Text("Reason",
+                      const Text('Reason',
                           style: TextStyle(
                               color: Colors.white,
                               fontStyle: FontStyle.italic,
                               fontSize: 14,
                               fontWeight: FontWeight.w400)),
                       // TODO: use VistData class to fill in info here
-                      const Text("Knee fracture",
+                      const Text('Knee fracture',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w500)),
                       const SizedBox(height: 8),
-                      const Text("Medications",
+                      const Text('Medications',
                           style: TextStyle(
                               color: Colors.white,
                               fontStyle: FontStyle.italic,
                               fontSize: 14,
                               fontWeight: FontWeight.w400)),
                       // TODO: use VisitData class
-                      const Text("Knee surgery and pain killers",
+                      const Text('Knee surgery and pain killers',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
@@ -157,14 +159,14 @@ class HomeScreen1 extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //TODO: get from VisitData
-                                Text("3:45pm",
+                                Text('3:45pm',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500)),
                                 //TODO: get from VisitData
-                                Text("Your blood work is back",
+                                Text('Your blood work is back',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
@@ -180,7 +182,7 @@ class HomeScreen1 extends StatelessWidget {
                           ),
                           padding: const EdgeInsets.all(12),
                           child: Column(children: [
-                            const Text("Total Time Taken",
+                            const Text('Total Time Taken',
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
@@ -219,85 +221,86 @@ class HomeScreen1 extends StatelessWidget {
             const SizedBox(height: 12),
             // TODO: first check if there are any previous visit before displaying this box?
             Container(
-                height: 115,
                 decoration: BoxDecoration(
                   border: Border.all(color: const Color(0x33000000)),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   color: Colors.white,
                 ),
                 padding: const EdgeInsets.all(16),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            //TODO: get actual visit Data
-                            const Text("Last Visiting Date",
-                                style: TextStyle(
-                                    color: secondaryTextColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.italic)),
-                            RichText(
-                              text: const TextSpan(
-                                style: TextStyle(
-                                    color: primaryTextColor, fontSize: 14),
-                                children: [
-                                  //TODO: when user is signed in, display their name
-                                  TextSpan(
-                                      text: "Total Time\n",
-                                      style: TextStyle(
-                                          color: secondaryTextColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.italic)),
-                                  TextSpan(
-                                      text: "2 hrs 45 minutes",
-                                      style: TextStyle(
-                                          color: primaryTextColor,
-                                          height: 1.75,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14)),
-                                ],
-                              ),
-                            ),
-                          ]),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("15 July 2023",
-                                style: TextStyle(
-                                    color: primaryTextColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500)),
-                            TextButton(
-                              onPressed: () {
-                                // TODO: add navigation to VisitDetails page
-                                print('check details');
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(primaryColor),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
+                child: IntrinsicHeight(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //TODO: get actual visit Data
+                              const Text('Last Visiting Date',
+                                  style: TextStyle(
+                                      color: secondaryTextColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      fontStyle: FontStyle.italic)),
+                              const SizedBox(height: 18),
+                              RichText(
+                                text: const TextSpan(
+                                  style: TextStyle(
+                                      color: primaryTextColor, fontSize: 14),
+                                  children: [
+                                    TextSpan(
+                                        text: 'Total Time\n',
+                                        style: TextStyle(
+                                            color: secondaryTextColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            fontStyle: FontStyle.italic)),
+                                    TextSpan(
+                                        text: '2 hrs 45 minutes',
+                                        style: TextStyle(
+                                            color: primaryTextColor,
+                                            height: 1.75,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14)),
+                                  ],
                                 ),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Text('View Details',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500)),
+                            ]),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('15 July 2023',
+                                  style: TextStyle(
+                                      color: primaryTextColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500)),
+                              TextButton(
+                                onPressed: () {
+                                  // TODO: add navigation to VisitDetails page
+                                  print('view details');
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(primaryColor),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                  child: Text('View Details',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500)),
+                                ),
                               ),
-                            ),
-                          ]),
-                    ]))
+                            ]),
+                      ]),
+                ))
           ]),
         ),
       ),
@@ -318,7 +321,7 @@ class HomeScreen1 extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         color: primaryColor),
                     // TODO: create timer to get actual visit times
-                    child: const Text("00",
+                    child: const Text('00',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -335,7 +338,7 @@ class HomeScreen1 extends StatelessWidget {
               const SizedBox(width: 12),
               const Column(
                 children: [
-                  Text(":",
+                  Text(':',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 12,
@@ -350,9 +353,6 @@ class HomeScreen1 extends StatelessWidget {
       );
 }
 
-// TODO: when timer is set up, add ternary conditional to return plurals (e.g. "Hours" instead of "Hour")
-var timeUnits = ["Day", "Hour", "Min", "Sec"];
-
 class HomeScreen2 extends StatelessWidget {
   const HomeScreen2({super.key});
 
@@ -362,7 +362,7 @@ class HomeScreen2 extends StatelessWidget {
       appBar: AppBar(
           actions: [Icon(Icons.notifications), Icon(Icons.menu)],
           backgroundColor: primaryColor),
-      body: const Text("Page 2"),
+      body: const Text('Page 2'),
     );
   }
 }
