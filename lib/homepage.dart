@@ -14,10 +14,6 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: primaryColor,
-        //   // title: const Text("Hello, Daniel!! :)"),
-        // ),
         body: switch (currentPageIndex) {
           1 => HomeScreen2(),
           2 => HomeScreen2(),
@@ -25,6 +21,7 @@ class _HomepageState extends State<Homepage> {
           _ => HomeScreen1(),
         },
         bottomNavigationBar: NavigationBar(
+          backgroundColor: Colors.white,
           onDestinationSelected: (int index) {
             setState(() {
               currentPageIndex = index;
@@ -72,20 +69,289 @@ class HomeScreen1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: RichText(
           text: const TextSpan(
-            style: TextStyle(color: Colors.black, fontSize: 14),
+            style: TextStyle(color: primaryTextColor, fontSize: 14),
             children: [
+              //TODO: when user is signed in, display their name
               TextSpan(text: "Welcome Back,\n"),
-              TextSpan(text: "Daniel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+              TextSpan(
+                  text: "Daniel",
+                  style: TextStyle(
+                      height: 1.5, fontWeight: FontWeight.bold, fontSize: 22)),
             ],
           ),
         ),
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.notifications, color: primaryColor),
+              onPressed: () {
+                print("notification");
+              }),
+          IconButton(
+              icon: const Icon(Icons.menu, color: primaryColor),
+              onPressed: () {
+                print("open side menu");
+              })
+        ],
       ),
-      body: const Text("Page 1"),
+      body: Padding(
+        padding: const EdgeInsets.all(32),
+        child: SingleChildScrollView(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color: primaryColor,
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text("Current Visit",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            height: 1.5,
+                          )),
+                      const SizedBox(height: 8),
+                      const Text("Reason",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400)),
+                      // TODO: use VistData class to fill in info here
+                      const Text("Knee fracture",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 8),
+                      const Text("Medications",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400)),
+                      // TODO: use VisitData class
+                      const Text("Knee surgery and pain killers",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Container(
+                              width: 16,
+                              height: 16,
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white)),
+                          const SizedBox(width: 8),
+                          const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //TODO: get from VisitData
+                                Text("3:45pm",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500)),
+                                //TODO: get from VisitData
+                                Text("Your blood work is back",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500)),
+                              ])
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            color: Colors.white,
+                          ),
+                          padding: const EdgeInsets.all(12),
+                          child: Column(children: [
+                            const Text("Total Time Taken",
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 8),
+                            _visitTimer
+                          ])),
+                      const SizedBox(height: 20),
+                      TextButton(
+                        onPressed: () {
+                          // TODO: add Navigation to VisitDetails page
+                          print('check details');
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                          foregroundColor:
+                              MaterialStateProperty.all(primaryColor),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text('Check Details',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600)),
+                        ),
+                      ),
+                      const SizedBox(height: 18)
+                    ])),
+            const SizedBox(height: 12),
+            // TODO: first check if there are any previous visit before displaying this box?
+            Container(
+                height: 115,
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0x33000000)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  color: Colors.white,
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //TODO: get actual visit Data
+                            const Text("Last Visiting Date",
+                                style: TextStyle(
+                                    color: secondaryTextColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.italic)),
+                            RichText(
+                              text: const TextSpan(
+                                style: TextStyle(
+                                    color: primaryTextColor, fontSize: 14),
+                                children: [
+                                  //TODO: when user is signed in, display their name
+                                  TextSpan(
+                                      text: "Total Time\n",
+                                      style: TextStyle(
+                                          color: secondaryTextColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.italic)),
+                                  TextSpan(
+                                      text: "2 hrs 45 minutes",
+                                      style: TextStyle(
+                                          color: primaryTextColor,
+                                          height: 1.75,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14)),
+                                ],
+                              ),
+                            ),
+                          ]),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("15 July 2023",
+                                style: TextStyle(
+                                    color: primaryTextColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500)),
+                            TextButton(
+                              onPressed: () {
+                                // TODO: add navigation to VisitDetails page
+                                print('check details');
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(primaryColor),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Text('View Details',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                            ),
+                          ]),
+                    ]))
+          ]),
+        ),
+      ),
     );
   }
+
+  Widget get _visitTimer => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          for (var i = 0; i < 4; ++i) ...[
+            Column(
+              children: [
+                Container(
+                    alignment: Alignment.center,
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        color: primaryColor),
+                    // TODO: create timer to get actual visit times
+                    child: const Text("00",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500))),
+                const SizedBox(height: 8),
+                Text(timeUnits[i],
+                    style: const TextStyle(
+                        color: primaryColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500))
+              ],
+            ),
+            if (i != 3) ...[
+              const SizedBox(width: 12),
+              const Column(
+                children: [
+                  Text(":",
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600)),
+                  SizedBox(height: 28)
+                ],
+              ),
+              const SizedBox(width: 12)
+            ]
+          ]
+        ],
+      );
 }
+
+// TODO: when timer is set up, add ternary conditional to return plurals (e.g. "Hours" instead of "Hour")
+var timeUnits = ["Day", "Hour", "Min", "Sec"];
 
 class HomeScreen2 extends StatelessWidget {
   const HomeScreen2({super.key});
@@ -94,17 +360,8 @@ class HomeScreen2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [Icon(Icons.notification_add), Icon(Icons.menu)],
-        backgroundColor: primaryColor,
-        title: RichText(
-          text: const TextSpan(
-            children: [
-              TextSpan(text: "Welcome back,\n"),
-              TextSpan(text: "Daniel"),
-            ],
-          ),
-        ),
-      ),
+          actions: [Icon(Icons.notifications), Icon(Icons.menu)],
+          backgroundColor: primaryColor),
       body: const Text("Page 2"),
     );
   }
