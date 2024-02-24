@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
 import 'package:tutorial/notifications.dart';
+import 'package:tutorial/visits.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -17,10 +18,10 @@ class _HomepageState extends State<Homepage> {
       home: Scaffold(
         // TODO: navigate to correct pages
         body: switch (currentPageIndex) {
-          1 => HomeScreen2(),
-          2 => HomeScreen2(),
-          3 => HomeScreen2(),
-          _ => HomeScreen1(),
+          1 => const HomeScreen2(),
+          2 => const HomeScreen2(),
+          3 => const HomeScreen2(),
+          _ => const HomeScreen1(),
         },
         bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.white,
@@ -362,6 +363,14 @@ class _HomeScreen1State extends State<HomeScreen1> {
 class HomeScreen2 extends StatelessWidget {
   const HomeScreen2({super.key});
 
+  final _items = const [
+            PastVisit(visitData: VisitData(dateOfVisit: "2/20/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
+            PastVisit(visitData: VisitData(dateOfVisit: "2/21/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
+            PastVisit(visitData: VisitData(dateOfVisit: "2/22/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
+            PastVisit(visitData: VisitData(dateOfVisit: "2/23/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
+            PastVisit(visitData: VisitData(dateOfVisit: "2/24/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
+          ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -378,78 +387,6 @@ class HomeScreen2 extends StatelessWidget {
         ),
       ),
       body: const Text("Page 2"),
-    );
-  }
-}
-
-/// Leads to the notifcations page.
-/// Creates instances of notifcations and renderes them onto the page.
-/// @author: Ameer Ghazal
-class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({super.key});
-
-  final _notifications = const [
-    PastNotification(
-        notificationData: NotificationData(
-            timeOfDay: "02:15 A.M.",
-            reasonOfNotification: "Your ER Lab data has finished.")),
-    PastNotification(
-        notificationData: NotificationData(
-            timeOfDay: "05:00 P.M.",
-            reasonOfNotification: "Hello, I am under the water.")),
-    PastNotification(
-        notificationData: NotificationData(
-            timeOfDay: "09:32 P.M.",
-            reasonOfNotification: "Hello World, 2. Coming, 2025.")),
-    PastNotification(
-        notificationData: NotificationData(
-            timeOfDay: "10:30 P.M.",
-            reasonOfNotification:
-                "Your CT scan analysis is complete, please come pick it up.")),
-  ];
-
-// TODO: Generalize this code among all the side pages (e.g., appbar for FAQ, notifcations, etc.)
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        iconTheme: const IconThemeData(color: Color(0xFFFFFFFF)),
-        leading: Navigator.canPop(context)
-            ? IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.navigate_before_sharp,
-                  color: Colors.white,
-                ),
-              )
-            : null,
-        centerTitle: true,
-        title: const Text(
-          "Notifications",
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: const Icon(Icons.menu),
-              color: Colors.white,
-              onPressed: () {},
-            ),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: ListView.separated(
-          separatorBuilder: (_, __) => const SizedBox(height: 16),
-          itemCount: _notifications.length,
-          itemBuilder: (_, index) => _notifications[index],
-        ),
-      ),
     );
   }
 }
