@@ -1,53 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tutorial/_themed_app_bar.dart';
 import 'package:tutorial/constants.dart';
 
-class FAQPage extends StatefulWidget {
+class FAQPage extends StatelessWidget {
   const FAQPage({super.key});
-
-  @override
-  State<FAQPage> createState() => _FAQPageState();
-}
-
-class _FAQPageState extends State<FAQPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        //TODO: Pull out into a reusable appBar [Use "___" extends AppBar]
-        leading: Navigator.canPop(context)
-            ? IconButton(
-                icon: const Icon(Icons.navigate_before_sharp,
-                    color: Colors.white),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            : null,
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: primaryColor,
-        centerTitle: true,
-        title: const Text("FAQ's",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              height: 1.5,
-            )),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: Image.asset('assets/PI_menu_icon.png',
-                  width: 20.0, height: 16.0),
-              color: Colors.white,
-              onPressed: () {},
-            ),
-          ),
-        ],
+      appBar: ThemedAppBar(
+        title: 'FAQs',
+        context: context,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
