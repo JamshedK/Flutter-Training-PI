@@ -35,12 +35,7 @@ Future<User?> signInWithGoogle() async {
   print('sign in with google');
 
   // Obtain the authentication tokens from the Google sign-in process
-  final GoogleSignInAuthentication? googleAuth =
-      await googleUser.authentication;
-
-  if (googleAuth == null) {
-    return null;
-  }
+  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
   if (googleAuth.accessToken == null && googleAuth.idToken == null) {
     return null;
