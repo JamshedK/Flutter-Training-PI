@@ -9,7 +9,7 @@ class FormBox extends StatefulWidget {
     required this.hintText,
     this.controller,
     required this.keyboardType,
-    //required this.inputFormatters,
+    // TODO add required this.inputFormatters,
     this.obscureText = false,
   });
 
