@@ -98,7 +98,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
           text: const TextSpan(
             style: TextStyle(color: primaryTextColor, fontSize: 14),
             children: [
-              //TODO: when user is signed in, display their name
+              //TODO: when user is signed in, get their name from the database
               TextSpan(text: 'Welcome Back,\n'),
               TextSpan(
                   text: 'Daniel',
