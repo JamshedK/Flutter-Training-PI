@@ -1,4 +1,4 @@
-// TODO This might be deprecated.
+//!! This might be deprecated.
 // Delete if still not in use after a while.
 
 import 'package:flutter/material.dart';
@@ -49,7 +49,7 @@ class _PersonalFormState extends State<PersonalForm> {
   String _lastNameError = '';
   String _dateOfBirthError = '';
   String _mobileNumberError = '';
-  String required = 'This field is required';
+  String _requiredError = 'This field is required';
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class _PersonalFormState extends State<PersonalForm> {
   // void updateErrorState(TextEditingController controller, String errorField) {
   //   setState(() {
   //     if (controller.text.isEmpty) {
-  //       errorField = required;
+  //       errorField = _requiredError;
   //     } else {
   //       errorField = '';
   //     }
