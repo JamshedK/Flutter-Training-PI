@@ -227,7 +227,7 @@ class _LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'Don\'t have an account?',
+            "Don't have an account?",
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
