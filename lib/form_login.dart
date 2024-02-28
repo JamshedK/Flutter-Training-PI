@@ -35,9 +35,29 @@ class _LoginFormState extends State<LoginForm> {
   late final TextEditingController _passwordController;
 
   String _emailError = '';
-  String _passwordError = '';
 
-  var authHandler = UserAuth();
+  void _onLoginPressed() {
+    if (_emailController.text.isEmpty) {
+      setState(() {
+        _emailError = 'Email cannot be empty';
+      });
+    } else {
+      setState(() {
+        _emailError = '';
+      });
+    }
+    print(
+        'login with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (_) {
+          return const Homepage();
+        },
+      ),
+      (Route<dynamic> route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,48 +124,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget get _createLoginButton => TextButton(
-        onPressed: () async {
-          //TODO: Revisit error handling for email and password
-          if (_emailController.text.isEmpty &&
-              _passwordController.text.isEmpty) {
-            setState(() {
-              _emailError = 'Email cannot be empty';
-              _passwordError = 'Password cannot be empty';
-            });
-            return;
-          } else if (_emailController.text.isEmpty) {
-            setState(() {
-              _emailError = 'Email cannot be empty';
-              _passwordError = '';
-            });
-            return;
-          } else if (_passwordController.text.isEmpty) {
-            setState(() {
-              _passwordError = 'Password cannot be empty';
-              _emailError = '';
-            });
-            return;
-          }
-          setState(() {
-            _emailError = '';
-            _passwordError = '';
-          });
-
-          try {
-            final user = await authHandler.handleSignInEmail(
-                _emailController.text, _passwordController.text);
-            if (!mounted) {
-              return;
-            }
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute<void>(builder: (context) => const Homepage()),
-              (Route<dynamic> route) => false,
-            );
-          } catch (e) {
-            print(e);
-          }
-        },
+        onPressed: _onLoginPressed,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
           foregroundColor: MaterialStateProperty.all(Colors.white),
