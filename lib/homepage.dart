@@ -139,7 +139,7 @@ class NotificationsPage extends StatelessWidget {
                 "Your CT scan analysis is complete, please come pick it up.")),
   ];
 
-// TODO: Genealize this code among all the side pages (e.g., appbar for FAQ, notifcations, etc.)
+// TODO: Generalize this code among all the side pages (e.g., appbar for FAQ, notifcations, etc.)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
