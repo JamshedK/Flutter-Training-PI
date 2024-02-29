@@ -110,9 +110,9 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget get _createLoginButton => TextButton(
         onPressed: () async {
-          
-        //TODO: Revisit error handling for email and password
-          if (_emailController.text.isEmpty && _passwordController.text.isEmpty) {
+          //TODO: Revisit error handling for email and password
+          if (_emailController.text.isEmpty &&
+              _passwordController.text.isEmpty) {
             setState(() {
               _emailError = 'Email cannot be empty';
               _passwordError = 'Password cannot be empty';
@@ -130,26 +130,26 @@ class _LoginFormState extends State<LoginForm> {
               _emailError = '';
             });
             return;
-          } 
+          }
           setState(() {
             _emailError = '';
             _passwordError = '';
           });
-          
+
           try {
-            final user = await authHandler.handleSignInEmail(_emailController.text, _passwordController.text);
-            if(!mounted){
+            final user = await authHandler.handleSignInEmail(
+                _emailController.text, _passwordController.text);
+            if (!mounted) {
               return;
             }
             Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute<void>(builder: (context) => const Homepage()),
-                  (Route<dynamic> route) => false,
+              context,
+              MaterialPageRoute<void>(builder: (context) => const Homepage()),
+              (Route<dynamic> route) => false,
             );
           } catch (e) {
             print(e);
           }
-
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
@@ -173,7 +173,22 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            onPressed: () => print('google'),
+            onPressed: () async {
+              try {
+                final user = await signInWithGoogle();
+                if (!mounted) {
+                  return;
+                }
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute<void>(
+                      builder: (context) => const Homepage()),
+                  (Route<dynamic> route) => false,
+                );
+              } catch (e) {
+                print(e);
+              }
+            },
             iconSize: 78,
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
@@ -270,5 +285,4 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ],
       );
-
 }
