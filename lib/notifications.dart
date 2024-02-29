@@ -95,7 +95,7 @@ class PastNotification extends StatelessWidget {
 }
 
 
-// TODO: Genealize this code among all the side pages (e.g., appbar for FAQ, notifcations, etc.)
+// TODO: Generalize this code among all the side pages (e.g., appbar for FAQ, notifcations, etc.)
 
 // @override
 // Widget build(BuildContext context) {
