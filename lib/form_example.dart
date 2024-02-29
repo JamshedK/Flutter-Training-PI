@@ -6,7 +6,6 @@ import 'package:tutorial/form_personal_details.dart';
 //import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:tutorial/user_auth.dart';
 
-
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
 
@@ -106,7 +105,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 const SizedBox(height: 16),
               ],
-              _createSignUpButton(context, _emailController, _passwordController),
+              _createSignUpButton(
+                  context, _emailController, _passwordController),
               const SizedBox(height: 32),
               const Text(
                 'Or Continue With',
@@ -126,7 +126,7 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   Widget _createSignUpButton(context, emailController, passwordController) =>
-     TextButton(
+      TextButton(
         onPressed: () {
           if (_emailController.text.isEmpty) {
             setState(() {
@@ -141,8 +141,8 @@ class _SignUpFormState extends State<SignUpForm> {
               'sign up with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
           Navigator.push(context, MaterialPageRoute(builder: (_) {
 //!!!!!!!!!!!! Use this button for testing different screens (default: PersonalForm)
-              return const PersonalForm();
-              //return const ResetPasswordForm();
+            return const PersonalForm();
+            //return const ResetPasswordForm();
           }));
 
 //           authHandler.handleSignInEmail(emailController.text, passwordController.text)
