@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_box.dart';
+import 'package:tutorial/form_helpers.dart';
 import 'package:tutorial/homepage.dart';
 // import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
@@ -23,10 +24,13 @@ class _PersonalFormState extends State<PersonalForm> {
     _lastNameController = TextEditingController();
     _dateOfBirthController = TextEditingController();
     _mobileNumberController = TextEditingController();
-
   }
 
   @override
+
+  /// Disposes the controllers used.
+  /// Controllers run in the background with listeners.
+  /// Thus, it is better to dispose them.
   void dispose() {
     _firstNameController.dispose();
     _lastNameController.dispose();
@@ -81,14 +85,7 @@ class _PersonalFormState extends State<PersonalForm> {
                 controller: _firstNameController,
                 keyboardType: TextInputType.name,
               ),
-              // FIRST NAME ERROR
-              if (_firstNameError.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                Text(
-                  _firstNameError,
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ],
+              ...FormHelpers.checkError(_firstNameError),
               const SizedBox(height: 16),
               FormBox(
                 icon: Icons.person_2_outlined,
@@ -96,14 +93,7 @@ class _PersonalFormState extends State<PersonalForm> {
                 controller: _lastNameController,
                 keyboardType: TextInputType.name,
               ),
-              // LAST NAME ERROR
-              if (_lastNameError.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                Text(
-                  _lastNameError,
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ],
+              ...FormHelpers.checkError(_lastNameError),
               const SizedBox(height: 16),
               FormBox(
                 icon: Icons.calendar_month_outlined,
@@ -111,14 +101,7 @@ class _PersonalFormState extends State<PersonalForm> {
                 controller: _dateOfBirthController,
                 keyboardType: TextInputType.number,
               ),
-              // DATE OF BIRTH ERROR
-              if (_dateOfBirthError.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                Text(
-                  _dateOfBirthError,
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ],
+              ...FormHelpers.checkError(_dateOfBirthError),
               const SizedBox(height: 16),
               FormBox(
                 icon: Icons.phone_outlined,
@@ -132,14 +115,7 @@ class _PersonalFormState extends State<PersonalForm> {
                 //   also try MaskTextInputFormatter to enforce a specific format
                 // ],
               ),
-              // MOBILE NUMBER ERROR
-              if (_mobileNumberError.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                Text(
-                  _mobileNumberError,
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ],
+              ...FormHelpers.checkError(_mobileNumberError),
               const SizedBox(height: 16),
               _createNextButton,
             ],
@@ -162,22 +138,47 @@ class _PersonalFormState extends State<PersonalForm> {
 
   Widget get _createNextButton => TextButton(
         onPressed: () {
-          _firstNameController.text.isEmpty ? setState(() { _firstNameError = required; }) : setState(() { _firstNameError = ''; });
-          _lastNameController.text.isEmpty ? setState(() { _lastNameError = required; }) : setState(() { _lastNameError = ''; });
-          _dateOfBirthController.text.isEmpty ? setState(() { _dateOfBirthError = required; }) : setState(() { _dateOfBirthError = ''; });
-          _mobileNumberController.text.isEmpty ? setState(() { _mobileNumberError = required; }) : setState(() { _mobileNumberError = ''; });
+          _firstNameController.text.isEmpty
+              ? setState(() {
+                  _firstNameError = required;
+                })
+              : setState(() {
+                  _firstNameError = '';
+                });
+          _lastNameController.text.isEmpty
+              ? setState(() {
+                  _lastNameError = required;
+                })
+              : setState(() {
+                  _lastNameError = '';
+                });
+          _dateOfBirthController.text.isEmpty
+              ? setState(() {
+                  _dateOfBirthError = required;
+                })
+              : setState(() {
+                  _dateOfBirthError = '';
+                });
+          _mobileNumberController.text.isEmpty
+              ? setState(() {
+                  _mobileNumberError = required;
+                })
+              : setState(() {
+                  _mobileNumberError = '';
+                });
           // do not continue if any fields are blank
-          bool allClear = _firstNameController.text.isNotEmpty
-                       && _lastNameController.text.isNotEmpty
-                       && _dateOfBirthController.text.isNotEmpty
-                       && _mobileNumberController.text.isNotEmpty;
-          if(allClear) {
+          bool allClear = _firstNameController.text.isNotEmpty &&
+              _lastNameController.text.isNotEmpty &&
+              _dateOfBirthController.text.isNotEmpty &&
+              _mobileNumberController.text.isNotEmpty;
+          if (allClear) {
             print(
                 'First/last name: "${_firstNameController.text}"/"${_lastNameController.text}"');
             Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return const Homepage();
+              return const Homepage();
             }));
-          };
+          }
+          ;
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
@@ -196,5 +197,4 @@ class _PersonalFormState extends State<PersonalForm> {
           ),
         ),
       );
-
 }
