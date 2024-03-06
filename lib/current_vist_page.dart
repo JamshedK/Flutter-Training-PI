@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
 import 'package:tutorial/_themed_app_bar.dart';
+import 'package:tutorial/current_visit_data.dart';
 
 class CurrentVisitPage extends StatelessWidget {
   static const _currentVisits = [
@@ -71,28 +72,16 @@ class CurrentVisitPage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 10),
-              for (var i = 0; i < _currentVisits.length; ++i) ...[
-                if (i == _currentVisits.length - 1) ...[
-                  CurrentVisitEvent(data: _currentVisits[i], isLastEvent: true),
-                ] else ...[
-                  CurrentVisitEvent(data: _currentVisits[i])
-                ]
-              ]
+              for (var i = 0; i < _currentVisits.length; ++i)
+                CurrentVisitEvent(
+                    data: _currentVisits[i],
+                    isLastEvent: i == _currentVisits.length - 1)
             ],
           ),
         ),
       ),
     );
   }
-}
-
-class CurrentVisitData {
-  const CurrentVisitData({
-    required this.timeOfEvent,
-    required this.eventDescription,
-  });
-  final String timeOfEvent;
-  final String eventDescription;
 }
 
 class CurrentVisitEvent extends StatelessWidget {
