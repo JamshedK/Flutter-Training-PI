@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
-import 'package:tutorial/notifications.dart';
+//import 'package:tutorial/notifications.dart';
 import 'package:tutorial/visits.dart';
 
 class Homepage extends StatefulWidget {

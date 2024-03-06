@@ -20,9 +20,6 @@ class FormBox extends StatefulWidget {
   final TextInputType keyboardType;
   //final TextInputFormatter inputFormatters;
 
-  final TextInputType keyboardType;
-  //final TextInputFormatter inputFormatters;
-
   @override
   State<FormBox> createState() => FormBoxState();
 }

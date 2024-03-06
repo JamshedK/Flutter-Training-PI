@@ -47,7 +47,7 @@ class _LoginFormState extends State<LoginForm> {
       });
     }
     print(
-        'login with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
+        'login with password: "${_passwordController.text}"'); // TODO do we need a _confirmPasswordController?
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(

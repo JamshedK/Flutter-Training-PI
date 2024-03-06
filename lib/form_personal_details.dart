@@ -140,28 +140,28 @@ class _PersonalFormState extends State<PersonalForm> {
         onPressed: () {
           _firstNameController.text.isEmpty
               ? setState(() {
-                  _firstNameError = required;
+                  _firstNameError = _requiredError;
                 })
               : setState(() {
                   _firstNameError = '';
                 });
           _lastNameController.text.isEmpty
               ? setState(() {
-                  _lastNameError = required;
+                  _lastNameError = _requiredError;
                 })
               : setState(() {
                   _lastNameError = '';
                 });
           _dateOfBirthController.text.isEmpty
               ? setState(() {
-                  _dateOfBirthError = required;
+                  _dateOfBirthError = _requiredError;
                 })
               : setState(() {
                   _dateOfBirthError = '';
                 });
           _mobileNumberController.text.isEmpty
               ? setState(() {
-                  _mobileNumberError = required;
+                  _mobileNumberError = _requiredError;
                 })
               : setState(() {
                   _mobileNumberError = '';
