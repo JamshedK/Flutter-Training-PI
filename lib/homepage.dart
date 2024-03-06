@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tutorial/_themed_app_bar.dart';
 import 'package:tutorial/constants.dart';
 import 'package:tutorial/notifications.dart';
+import 'package:tutorial/current_visit_page.dart';
+import 'package:tutorial/splash/splash_screen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -17,9 +20,9 @@ class _HomepageState extends State<Homepage> {
       home: Scaffold(
         // TODO: navigate to correct pages
         body: switch (currentPageIndex) {
-          1 => HomeScreen2(),
-          2 => HomeScreen2(),
-          3 => HomeScreen2(),
+          1 => const CurrentVisitPage(), // TODO 1 => const Navigator(child: const CurrentVisitPage()),
+          2 => const NotificationsPage(), // TODO this should be a HistoryPage()
+          3 => const VisitDetailsTest(),
           _ => HomeScreen1(),
         },
         bottomNavigationBar: NavigationBar(
@@ -336,6 +339,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                   onPressed: () {
                     // TODO: add navigation to VisitDetails page
                     print('view details');
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const VisitDetailsTest()));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(primaryColor),
@@ -378,6 +382,21 @@ class HomeScreen2 extends StatelessWidget {
         ),
       ),
       body: const Text("Page 2"),
+    );
+  }
+}
+
+class VisitDetailsTest extends StatelessWidget {
+  const VisitDetailsTest({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: ThemedAppBar(
+        title: "visit details",
+        context: context,
+      ),
+      body: const Placeholder(),
     );
   }
 }
