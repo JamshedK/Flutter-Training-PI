@@ -140,7 +140,7 @@ class _SignUpFormState extends State<SignUpForm> {
           print(
               'sign up with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
           Navigator.push(context, MaterialPageRoute(builder: (_) {
-//!!!!!!!!!!!! Use this button for testing different screens (default: PersonalForm)
+//TODO Use this button for testing different screens (default: PersonalForm)
               return const PersonalForm();
               //return const ResetPasswordForm();
           }));

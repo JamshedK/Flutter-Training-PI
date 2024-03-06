@@ -25,7 +25,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
     super.dispose();
   }
 
-  late TextEditingController _emailController;
+  late final TextEditingController _emailController;
 
   String _emailError = '';
 

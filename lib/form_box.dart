@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tutorial/constants.dart';
 
 class FormBox extends StatefulWidget {
@@ -9,7 +8,7 @@ class FormBox extends StatefulWidget {
     required this.hintText,
     this.controller,
     required this.keyboardType,
-    //required this.inputFormatters,
+    // TODO add required this.inputFormatters,
     this.obscureText = false,
   });
 
@@ -17,6 +16,9 @@ class FormBox extends StatefulWidget {
   final IconData icon;
   final String hintText;
   final TextEditingController? controller;
+
+  final TextInputType keyboardType;
+  //final TextInputFormatter inputFormatters;
 
   final TextInputType keyboardType;
   //final TextInputFormatter inputFormatters;
