@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_box.dart';
+import 'package:tutorial/form_helpers.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -14,10 +15,10 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
 
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
-    _emailController = TextEditingController();
-    _phoneNumberController = TextEditingController();
+    _firstNameController = TextEditingController(text: "John");
+    _lastNameController = TextEditingController(text: "Doe");
+    _emailController = TextEditingController(text: "JohnDoe@gmail.com");
+    _phoneNumberController = TextEditingController(text: "333-000-9020");
   }
 
   @override
@@ -68,28 +69,45 @@ class _ProfilePageState extends State<ProfilePage> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        clipBehavior: Clip.antiAlias,
+        child: Padding(
+          padding: const EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset('assets/ProfilePic.png'),
-              const Text(
-                "First Name",
-                style: TextStyle(color: grayColor, fontSize: 16),
+              // TODO: Make the PP a clipped picture (e.g., CircleAvatar).
+              Image.asset(
+                'assets/ProfilePic.png',
+                height: 150,
+                width: 150,
               ),
-              const Text(
-                "Last Name",
-                style: TextStyle(color: grayColor, fontSize: 16),
-              ),
-              const Text(
-                "Email",
-                style: TextStyle(color: grayColor, fontSize: 16),
-              ),
-              const Text(
-                "Phone Number",
-                style: TextStyle(color: grayColor, fontSize: 16),
+              ...buildInputBox(_firstNameController, "First Name"),
+              ...buildInputBox(_lastNameController, "Last Name"),
+              ...buildInputBox(_emailController, "Email Address"),
+              ...buildInputBox(_phoneNumberController, "Phone Number"),
+              SizedBox(
+                width: 380,
+                height: 60,
+                child: TextButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(primaryColor),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text(
+                      'Scan Your MRN',
+                      style: TextStyle(fontSize: 16, height: 1.5),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -98,3 +116,46 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+/// Creates the user input box, used acorss many pages.
+/// Takes in the controller and hintText.
+/// Calls the InputBoxStyle method from form helpers.
+List<Widget> buildInputBox(TextEditingController controller, String hintText) {
+  return [
+    Text(
+      hintText,
+      style: const TextStyle(color: grayColor, fontSize: 12),
+    ),
+    const SizedBox(height: 8),
+    FormHelpers.inputBoxStyle(controller),
+    const SizedBox(height: 16),
+  ];
+}
+
+
+// TODO: Review this.
+// class _ProfileColumn extends StatelessWidget {
+//   const _ProfileColumn({
+//     required this.labels,
+//     required this.controllers,
+//   });
+
+//   final List<String> labels;
+//   final List<TextEditingController> controllers;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     assert(labels.length == controllers.length);
+
+//     return Column(
+//       children: [
+//         for (int i = 0; i < labels.length; ++i) ...[
+//           Text(labels[i]),
+//           const SizedBox(height: 8),
+//           buildInputBox(controllers[i]),
+//           const SizedBox(height: 16),
+//         ],
+//       ],
+//     );
+//   }
+// }
