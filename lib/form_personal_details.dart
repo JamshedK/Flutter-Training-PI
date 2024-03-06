@@ -49,7 +49,7 @@ class _PersonalFormState extends State<PersonalForm> {
   String _lastNameError = '';
   String _dateOfBirthError = '';
   String _mobileNumberError = '';
-  String _requiredError = 'This field is required';
+  final String _requiredError = 'This field is required';
 
   @override
   Widget build(BuildContext context) {

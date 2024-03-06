@@ -365,10 +365,10 @@ class HomeScreen2 extends StatelessWidget {
 
   final _items = const [
             PastVisit(visitData: VisitData(dateOfVisit: "2/20/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
-            PastVisit(visitData: VisitData(dateOfVisit: "2/21/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
-            PastVisit(visitData: VisitData(dateOfVisit: "2/22/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
-            PastVisit(visitData: VisitData(dateOfVisit: "2/23/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
-            PastVisit(visitData: VisitData(dateOfVisit: "2/24/24", reasonForVisit: "intake appt", timeSpent: "1 hour", medications: "pills")),
+            PastVisit(visitData: VisitData(dateOfVisit: "2/21/24", reasonForVisit: "treatment", timeSpent: "2 hours", medications: "surgery")),
+            PastVisit(visitData: VisitData(dateOfVisit: "2/22/24", reasonForVisit: "checkup", timeSpent: "45 min", medications: "none")),
+            PastVisit(visitData: VisitData(dateOfVisit: "2/23/24", reasonForVisit: "evaluation", timeSpent: "1 hour 30 min", medications: "x-ray")),
+            PastVisit(visitData: VisitData(dateOfVisit: "2/24/24", reasonForVisit: "checkup", timeSpent: "30 min", medications: "pills")),
           ];
 
   @override
