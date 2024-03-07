@@ -103,12 +103,17 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      'Scan Your MRN',
-                      style: TextStyle(fontSize: 16, height: 1.5),
-                    ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Add some space between the icon and text
+                      Text(
+                        'Scan Your MRN',
+                        style: TextStyle(fontSize: 16, height: 1.5),
+                      ),
+                      SizedBox(width: 8),
+                      Icon(Icons.camera_alt),
+                    ],
                   ),
                 ),
               ),

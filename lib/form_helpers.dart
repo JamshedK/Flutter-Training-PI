@@ -29,35 +29,32 @@ class FormHelpers {
     return SizedBox(
       height: 60,
       width: 380,
-      child: Align(
+      child: Container(
         alignment: Alignment.center,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x33000000),
-                blurRadius: 5.0,
-                spreadRadius: 0,
-                offset: Offset(0, 0),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: controller,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x33000000),
+              blurRadius: 5.0,
+              spreadRadius: 0,
+              offset: Offset(0, 0),
             ),
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              color: primaryTextColor,
-            ),
-            textAlign: TextAlign.left,
-            textAlignVertical: TextAlignVertical.center,
+          ],
+        ),
+        child: TextFormField(
+          controller: controller,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           ),
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            color: primaryTextColor,
+          ),
+          textAlign: TextAlign.left,
+          textAlignVertical: TextAlignVertical.center,
         ),
       ),
     );
