@@ -82,6 +82,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 150,
                 width: 150,
               ),
+              const SizedBox(
+                height: 24,
+              ),
               ...buildInputBox(_firstNameController, "First Name"),
               ...buildInputBox(_lastNameController, "Last Name"),
               ...buildInputBox(_emailController, "Email Address"),
