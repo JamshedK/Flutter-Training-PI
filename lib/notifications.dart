@@ -74,7 +74,7 @@ class PastNotification extends StatelessWidget {
                       fontSize: 12,
                       height: 1.5)),
               Container(
-                // TODO: Fix Row overflow, instead of hard-coded constraint.
+                // TODO: Fix Row overflow, instead of hard-coded constraint (EXAPANDED).
                 constraints: const BoxConstraints(maxWidth: 275),
                 child: Text(
                   notificationData.reasonOfNotification,
