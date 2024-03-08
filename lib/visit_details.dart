@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tutorial/_themed_app_bar.dart';
 import 'package:tutorial/constants.dart';
 
+//TODO: Make data into format like Home Page for data transfer from database
+//TODO: Insert Painter into Current Visit Box
 class VisitDetailsPage extends StatelessWidget {
   const VisitDetailsPage({
     super.key,
