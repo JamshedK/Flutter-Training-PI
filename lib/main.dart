@@ -1,5 +1,6 @@
 // import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tutorial/homepage.dart';
 import 'package:tutorial/profile_screen.dart';
 // import 'package:tutorial/faq_page.dart';
 import 'package:tutorial/splash/splash_screen.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(fontFamily: 'Poppins'),
       debugShowCheckedModeBanner: false,
-      home: const ProfilePage(),
+      home: const NotificationsPage(),
     );
   }
 }
