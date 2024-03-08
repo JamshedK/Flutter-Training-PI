@@ -178,7 +178,6 @@ class _PersonalFormState extends State<PersonalForm> {
               return const Homepage();
             }));
           }
-          ;
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
