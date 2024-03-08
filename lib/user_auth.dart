@@ -12,10 +12,27 @@ class UserAuth {
     return user;
   }
 
-  Future<User> handleSignUp(email, password) async {
-    UserCredential result = await auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    final User user = result.user!;
+  Future<User?> handleSignUp(email, password) async {
+    // UserCredential result = await auth.createUserWithEmailAndPassword(
+    //     email: email, password: password);
+    // final User user = result.user!;
+    late final User? user;
+    try {
+      final UserCredential result =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      user = result.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
 
     return user;
   }
