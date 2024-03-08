@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(fontFamily: 'Poppins'),
       debugShowCheckedModeBanner: false,
-      home: const NotificationsPage(),
+      home: const SplashScreen(),
     );
   }
 }
