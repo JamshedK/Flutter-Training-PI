@@ -3,7 +3,6 @@ import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_box.dart';
 import 'package:tutorial/form_login.dart';
 import 'package:tutorial/form_personal_details.dart';
-//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:tutorial/user_auth.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -127,7 +126,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Widget _createSignUpButton(context, emailController, passwordController) =>
       TextButton(
-        onPressed: () {
+        onPressed: () async {
           if (_emailController.text.isEmpty) {
             setState(() {
               _emailError = 'Email cannot be empty';
@@ -137,22 +136,21 @@ class _SignUpFormState extends State<SignUpForm> {
               _emailError = '';
             });
           }
-          print(
-              'sign up with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-//!!!!!!!!!!!! Use this button for testing different screens (default: PersonalForm)
-            return const PersonalForm();
-            //return const ResetPasswordForm();
-          }));
-
-//           authHandler.handleSignInEmail(emailController.text, passwordController.text)
-//             .then<void>((User user) {
-//               Navigator.pushAndRemoveUntil(
-//                 context,
-//                 MaterialPageRoute<void>(builder: (context) => const PersonalForm()),
-//                 (Route<dynamic> route) => false,
-//               );
-//             }).catchError((e) => print(e));
+          try {
+            final user = await authHandler.handleSignUp(
+              emailController.text,
+              passwordController.text,
+            );
+            if (!mounted) {
+              return;
+            }
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return const PersonalForm();
+              //return const ResetPasswordForm();
+            }));
+          } catch (e) {
+            print(e);
+          }
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
