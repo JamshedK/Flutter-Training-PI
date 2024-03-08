@@ -27,6 +27,8 @@ Future<User?> signInWithGoogle() async {
         '997688084433-qiahs2fdcekq042vg9k7dl7mebo58v7d.apps.googleusercontent.com',
   );
 
+  googleSignIn.disconnect();
+
   // Attempt to sign in the user with Google
   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
   if (googleUser == null) {
