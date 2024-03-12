@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/_themed_app_bar.dart';
 import 'package:tutorial/constants.dart';
+import 'package:tutorial/form_box.dart';
 import 'package:tutorial/notifications.dart';
 import 'package:tutorial/current_visit_page.dart';
-import 'package:tutorial/splash/splash_screen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -20,10 +20,11 @@ class _HomepageState extends State<Homepage> {
       home: Scaffold(
         // TODO: navigate to correct pages
         body: switch (currentPageIndex) {
-          1 => const CurrentVisitPage(), // TODO 1 => const Navigator(child: const CurrentVisitPage()),
+          1 =>
+            const CurrentVisitPage(), // TODO 1 => const Navigator(child: const CurrentVisitPage()),
           2 => const NotificationsPage(), // TODO this should be a HistoryPage()
-          3 => const VisitDetailsTest(),
-          _ => HomeScreen1(),
+          3 => const ProfilePage(), // TODO this should be the profile page
+          _ => const HomeScreen1(),
         },
         bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.white,
@@ -33,29 +34,29 @@ class _HomepageState extends State<Homepage> {
             });
           },
           selectedIndex: currentPageIndex,
-          destinations: const <Widget>[
+          destinations: <Widget>[
             NavigationDestination(
               selectedIcon: Icon(Icons.home, color: primaryColor),
-              icon: Icon(Icons.home_outlined),
+              icon: Image.asset("assets/nb_profile.png", scale: 1.5), // Icon(Icons.home_outlined),
               label: 'Home',
             ),
             NavigationDestination(
               selectedIcon:
                   Icon(Icons.notifications_sharp, color: primaryColor),
-              icon: Badge(child: Icon(Icons.notifications_sharp)),
+              icon: Image.asset("assets/nb_profile.png", scale: 1.5), // Badge(child: Icon(Icons.notifications_sharp)),
               label: 'Current Visit',
             ),
             NavigationDestination(
               icon: Badge(
                 label: Text('2'),
-                child: Icon(Icons.messenger_sharp),
+                child: Image.asset("assets/nb_history.png", scale: 1.5), //Icon(Icons.messenger_sharp),
               ),
               label: 'History',
             ),
             NavigationDestination(
               icon: Badge(
                 label: Text('2'),
-                child: Icon(Icons.messenger_sharp),
+                child: Image.asset("assets/nb_profile.png", scale: 1.5), // Icon(Icons.messenger_sharp),
               ),
               label: 'Profile',
             ),
@@ -339,7 +340,10 @@ class _HomeScreen1State extends State<HomeScreen1> {
                   onPressed: () {
                     // TODO: add navigation to VisitDetails page
                     print('view details');
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const VisitDetailsTest()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const VisitDetailsTest()));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(primaryColor),
@@ -386,6 +390,121 @@ class HomeScreen2 extends StatelessWidget {
   }
 }
 
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        iconTheme: const IconThemeData(color: Color(0xFFFFFFFF)),
+        leading: Navigator.canPop(context)
+            ? IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.navigate_before_sharp,
+                  color: Colors.white,
+                ),
+              )
+            : null,
+        centerTitle: true,
+        title: const Text(
+          "Profile",
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              icon: const Icon(Icons.menu),
+              color: Colors.white,
+              onPressed: () {},
+            ),
+          )
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(32),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image.asset('assets/profile_pic.png', scale: 2,),
+              const Text(
+                'First name',
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              const SizedBox(height: 8),
+              // TODO: FormBox should not be const, and controller should update credentials
+              const FormBox(
+                icon: Icons.man,
+                hintText: 'First Name',
+                obscureText: false,
+                // controller: _passwordController,
+                keyboardType: TextInputType.none,
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Last name',
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Email',
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Phone number',
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              const SizedBox(height: 32),
+              _createMRNButton,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Widget get _createMRNButton => TextButton(
+      onPressed: () async {
+        print("Scan your MRN");
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(primaryColor),
+        foregroundColor: MaterialStateProperty.all(Colors.white),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
+      child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: RichText(
+            text: const TextSpan(
+              //style: StyleElement(),
+              children: [
+                TextSpan(
+                    text: 'Scan your MRN  ',
+                    style:
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                WidgetSpan(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 2.0),
+                    child: Icon(Icons.camera_alt_outlined),
+                  ),
+                ),
+              ],
+            ),
+          )),
+    );
+
 class VisitDetailsTest extends StatelessWidget {
   const VisitDetailsTest({super.key});
 
@@ -393,7 +512,7 @@ class VisitDetailsTest extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ThemedAppBar(
-        title: "visit details",
+        title: "visit details!!",
         context: context,
       ),
       body: const Placeholder(),
