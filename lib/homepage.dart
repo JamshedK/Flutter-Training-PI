@@ -4,6 +4,7 @@ import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_box.dart';
 import 'package:tutorial/notifications.dart';
 import 'package:tutorial/current_visit_page.dart';
+import 'package:tutorial/profile_screen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -36,28 +37,23 @@ class _HomepageState extends State<Homepage> {
           selectedIndex: currentPageIndex,
           destinations: <Widget>[
             NavigationDestination(
-              selectedIcon: Icon(Icons.home, color: primaryColor),
-              icon: Image.asset("assets/nb_profile.png", scale: 1.5), // Icon(Icons.home_outlined),
+              selectedIcon: Image.asset("assets/navbar/home_clicked.png", scale: 1.5),
+              icon: Image.asset("assets/navbar/home.png", scale: 1.5), // Icon(Icons.home_outlined),
               label: 'Home',
             ),
             NavigationDestination(
-              selectedIcon:
-                  Icon(Icons.notifications_sharp, color: primaryColor),
-              icon: Image.asset("assets/nb_profile.png", scale: 1.5), // Badge(child: Icon(Icons.notifications_sharp)),
+              selectedIcon: Image.asset("assets/navbar/currvisit_clicked.png", scale: 1.5),
+              icon: Image.asset("assets/navbar/currvisit.png", scale: 1.5), // Badge(child: Icon(Icons.notifications_sharp)),
               label: 'Current Visit',
             ),
             NavigationDestination(
-              icon: Badge(
-                label: Text('2'),
-                child: Image.asset("assets/nb_history.png", scale: 1.5), //Icon(Icons.messenger_sharp),
-              ),
+              selectedIcon: Image.asset("assets/navbar/history_clicked.png", scale: 1.5),
+              icon: Image.asset("assets/navbar/history.png", scale: 1.5),
               label: 'History',
             ),
             NavigationDestination(
-              icon: Badge(
-                label: Text('2'),
-                child: Image.asset("assets/nb_profile.png", scale: 1.5), // Icon(Icons.messenger_sharp),
-              ),
+              selectedIcon: Image.asset("assets/navbar/profile_clicked.png", scale: 1.5),
+              icon: Image.asset("assets/navbar/profile.png", scale: 1.5),
               label: 'Profile',
             ),
           ],
@@ -386,87 +382,6 @@ class HomeScreen2 extends StatelessWidget {
         ),
       ),
       body: const Text("Page 2"),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        iconTheme: const IconThemeData(color: Color(0xFFFFFFFF)),
-        leading: Navigator.canPop(context)
-            ? IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.navigate_before_sharp,
-                  color: Colors.white,
-                ),
-              )
-            : null,
-        centerTitle: true,
-        title: const Text(
-          "Profile",
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: const Icon(Icons.menu),
-              color: Colors.white,
-              onPressed: () {},
-            ),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(32),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Image.asset('assets/profile_pic.png', scale: 2,),
-              const Text(
-                'First name',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              const SizedBox(height: 8),
-              // TODO: FormBox should not be const, and controller should update credentials
-              const FormBox(
-                icon: Icons.man,
-                hintText: 'First Name',
-                obscureText: false,
-                // controller: _passwordController,
-                keyboardType: TextInputType.none,
-              ),
-              const SizedBox(height: 32),
-              const Text(
-                'Last name',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              const SizedBox(height: 32),
-              const Text(
-                'Email',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              const SizedBox(height: 32),
-              const Text(
-                'Phone number',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              const SizedBox(height: 32),
-              _createMRNButton,
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
