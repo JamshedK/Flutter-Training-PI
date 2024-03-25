@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_box.dart';
 import 'package:tutorial/form_helpers.dart';
 
 class ProfilePage extends StatefulWidget {

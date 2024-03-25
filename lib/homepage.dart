@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/_themed_app_bar.dart';
 import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_box.dart';
 import 'package:tutorial/notifications.dart';
 import 'package:tutorial/current_visit_page.dart';
 import 'package:tutorial/profile_screen.dart';
@@ -37,22 +36,28 @@ class _HomepageState extends State<Homepage> {
           selectedIndex: currentPageIndex,
           destinations: <Widget>[
             NavigationDestination(
-              selectedIcon: Image.asset("assets/navbar/home_clicked.png", scale: 1.5),
-              icon: Image.asset("assets/navbar/home.png", scale: 1.5), // Icon(Icons.home_outlined),
+              selectedIcon:
+                  Image.asset("assets/navbar/home_clicked.png", scale: 1.5),
+              icon: Image.asset("assets/navbar/home.png",
+                  scale: 1.5), // Icon(Icons.home_outlined),
               label: 'Home',
             ),
             NavigationDestination(
-              selectedIcon: Image.asset("assets/navbar/currvisit_clicked.png", scale: 1.5),
-              icon: Image.asset("assets/navbar/currvisit.png", scale: 1.5), // Badge(child: Icon(Icons.notifications_sharp)),
+              selectedIcon: Image.asset("assets/navbar/currvisit_clicked.png",
+                  scale: 1.5),
+              icon: Image.asset("assets/navbar/currvisit.png",
+                  scale: 1.5), // Badge(child: Icon(Icons.notifications_sharp)),
               label: 'Current Visit',
             ),
             NavigationDestination(
-              selectedIcon: Image.asset("assets/navbar/history_clicked.png", scale: 1.5),
+              selectedIcon:
+                  Image.asset("assets/navbar/history_clicked.png", scale: 1.5),
               icon: Image.asset("assets/navbar/history.png", scale: 1.5),
               label: 'History',
             ),
             NavigationDestination(
-              selectedIcon: Image.asset("assets/navbar/profile_clicked.png", scale: 1.5),
+              selectedIcon:
+                  Image.asset("assets/navbar/profile_clicked.png", scale: 1.5),
               icon: Image.asset("assets/navbar/profile.png", scale: 1.5),
               label: 'Profile',
             ),

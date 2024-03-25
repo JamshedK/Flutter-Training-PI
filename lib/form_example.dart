@@ -3,9 +3,9 @@ import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_box.dart';
 import 'package:tutorial/form_login.dart';
 import 'package:tutorial/form_personal_details.dart';
+import 'package:tutorial/homepage.dart';
 //import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:tutorial/user_auth.dart';
-
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -106,7 +106,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 const SizedBox(height: 16),
               ],
-              _createSignUpButton(context, _emailController, _passwordController),
+              _createSignUpButton(
+                  context, _emailController, _passwordController),
               const SizedBox(height: 32),
               const Text(
                 'Or Continue With',
@@ -118,6 +119,7 @@ class _SignUpFormState extends State<SignUpForm> {
               _createWithSocialRow,
               const SizedBox(height: 48),
               _alreadyHaveAccountRow,
+              _skipButton(context, _emailController, _passwordController),
             ],
           ),
         ),
@@ -125,8 +127,34 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  Widget _skipButton(context, emailController, passwordController) =>
+      TextButton(
+        onPressed: () {
+          print('skip everything and go straight to homepage');
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return const Homepage();
+          }));
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(primaryColor),
+          foregroundColor: MaterialStateProperty.all(Colors.white),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(16),
+          child: Text(
+            '[DEBUG] Go straight to homepage',
+            style: TextStyle(fontSize: 16, height: 1.5),
+          ),
+        ),
+      );
+
   Widget _createSignUpButton(context, emailController, passwordController) =>
-     TextButton(
+      TextButton(
         onPressed: () {
           if (_emailController.text.isEmpty) {
             setState(() {
@@ -141,8 +169,8 @@ class _SignUpFormState extends State<SignUpForm> {
               'sign up with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
           Navigator.push(context, MaterialPageRoute(builder: (_) {
 //!!!!!!!!!!!! Use this button for testing different screens (default: PersonalForm)
-              return const PersonalForm();
-              //return const ResetPasswordForm();
+            return const PersonalForm();
+            //return const ResetPasswordForm();
           }));
 
 //           authHandler.handleSignInEmail(emailController.text, passwordController.text)
