@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/constants.dart';
 import 'package:tutorial/form_helpers.dart';
+import 'package:tutorial/scan_MRN.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -92,7 +93,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: 380,
                 height: 60,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return const scanMRN();
+                    }));
+                  },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(primaryColor),
                     foregroundColor: MaterialStateProperty.all(Colors.white),

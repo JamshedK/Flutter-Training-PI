@@ -4,6 +4,7 @@ import 'package:tutorial/constants.dart';
 import 'package:tutorial/notifications.dart';
 import 'package:tutorial/current_visit_page.dart';
 import 'package:tutorial/profile_screen.dart';
+import 'package:tutorial/faq_page.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -22,7 +23,7 @@ class _HomepageState extends State<Homepage> {
         body: switch (currentPageIndex) {
           1 =>
             const CurrentVisitPage(), // TODO 1 => const Navigator(child: const CurrentVisitPage()),
-          2 => const NotificationsPage(), // TODO this should be a HistoryPage()
+          2 => const FAQPage(), // TODO this should be a HistoryPage()
           3 => const ProfilePage(), // TODO this should be the profile page
           _ => const HomeScreen1(),
         },
@@ -118,6 +119,9 @@ class _HomeScreen1State extends State<HomeScreen1> {
               icon: Image.asset('assets/homepage_notif_bell.png'),
               onPressed: () {
                 print('notification');
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return const NotificationsPage();
+                }));
               }),
           IconButton(
               icon: Image.asset('assets/side_menu_orange.png'),
