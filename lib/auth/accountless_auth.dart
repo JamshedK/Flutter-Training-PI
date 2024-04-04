@@ -19,22 +19,16 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
     _idController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
     _idController.dispose();
 
     super.dispose();
   }
 
-  late final TextEditingController _emailController;
-  late final TextEditingController _passwordController;
   late final TextEditingController _idController;
 
   String _idError = '';
@@ -111,8 +105,7 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
             _idError = '';
           });
           try {
-            final user = await authHandler.handleSignInEmail(
-                _emailController.text, _passwordController.text);
+            final user = await authHandler.handleFastAuth(_idController.text);
             if (!mounted) {
               return;
             }
@@ -122,7 +115,9 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
               (Route<dynamic> route) => false,
             );
           } catch (e) {
-            print(e);
+            setState(() {
+              _idError = 'Invalid MRN or SSN';
+            });
           }
         },
         style: ButtonStyle(
