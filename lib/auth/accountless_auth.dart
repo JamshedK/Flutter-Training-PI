@@ -37,8 +37,7 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
   late final TextEditingController _passwordController;
   late final TextEditingController _idController;
 
-  String _emailError = '';
-  String _passwordError = '';
+  String _idError = '';
 
   var authHandler = UserAuth();
 
@@ -74,8 +73,10 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
                 icon: Icons.person,
                 hintText: 'MRN or SSN',
                 controller: _idController,
+                obscureText: true,
                 keyboardType: TextInputType.number,
               ),
+              ...FormHelpers.checkError(_idError),
               const SizedBox(height: 24),
 
               //TODO: Add Empty Password Error
@@ -100,32 +101,15 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
 
   Widget get _createLoginButton => TextButton(
         onPressed: () async {
-          //TODO: Revisit error handling for email and password
-          if (_emailController.text.isEmpty &&
-              _passwordController.text.isEmpty) {
+          if (_idController.text.isEmpty) {
             setState(() {
-              _emailError = 'Email cannot be empty';
-              _passwordError = 'Password cannot be empty';
-            });
-            return;
-          } else if (_emailController.text.isEmpty) {
-            setState(() {
-              _emailError = 'Email cannot be empty';
-              _passwordError = '';
-            });
-            return;
-          } else if (_passwordController.text.isEmpty) {
-            setState(() {
-              _passwordError = 'Password cannot be empty';
-              _emailError = '';
+              _idError = 'Field cannot be empty';
             });
             return;
           }
           setState(() {
-            _emailError = '';
-            _passwordError = '';
+            _idError = '';
           });
-
           try {
             final user = await authHandler.handleSignInEmail(
                 _emailController.text, _passwordController.text);
