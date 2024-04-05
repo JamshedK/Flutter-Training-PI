@@ -5,6 +5,8 @@ import 'package:tutorial/constants.dart';
 import 'package:tutorial/_themed_app_bar.dart';
 import 'package:tutorial/current_visit_data.dart';
 
+// TODO: What are "unusual line terminators?" Should we care? - Daniel
+
 class CurrentVisitPage extends StatelessWidget {
   static const _currentVisits = [
     CurrentVisitData(
@@ -55,7 +57,7 @@ class CurrentVisitPage extends StatelessWidget {
     CurrentVisitData(
         timeOfEvent: '5:30pm',
         eventDescription:
-            'We thank you for your visit today at Smith Health. Your care team was Cheyenne RN and Dr. Sinek.  We hope we took excellent care of you or your loved one today. Please feel free to rate us on a scale of 0-10 where 10 is excellent. Don\'t forget to follow up with your Primary Care Provider and find your results from today\'s visit on your MyChart (Link to MyChart)'),
+            'We thank you for your visit today at Smith Health. Your care team was Cheyenne RN and Dr. Sinek. We hope we took excellent care of you or your loved one today. Please feel free to rate us on a scale of 0-10 where 10 is excellent. Don\'t forget to follow up with your Primary Care Provider and find your results from today\'s visit on your MyChart (Link to MyChart)'),
   ];
   const CurrentVisitPage({super.key});
 
