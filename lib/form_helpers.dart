@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
 
 /// FormHelpers contains mutliple methods to avoid code repition.
 /// @author: Ameer Ghazal

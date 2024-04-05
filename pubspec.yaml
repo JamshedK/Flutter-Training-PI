@@ -39,6 +39,7 @@ dependencies:
 
   firebase_core: ^2.25.4
   firebase_auth: ^4.17.4
+  firebase_dynamic_links: ^5.4.15
   google_sign_in: ^6.2.1
   firebase_messaging: ^14.7.19
   firebase_crashlytics: ^3.4.18
