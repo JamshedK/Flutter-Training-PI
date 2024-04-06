@@ -1,9 +1,7 @@
-// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-// import 'package:tutorial/faq_page.dart';
-import 'package:tutorial/splash/splash_screen.dart';
-import 'firebase_options.dart';
+import 'package:patient_inform/pages/splash/splash_screen.dart';
+import 'utils/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -19,7 +17,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+  NotificationSettings settings =
+      await FirebaseMessaging.instance.requestPermission(
     alert: true,
     announcement: false,
     badge: true,

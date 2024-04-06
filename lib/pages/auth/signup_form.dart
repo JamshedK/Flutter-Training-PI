@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_box.dart';
-import 'package:tutorial/form_login.dart';
-import 'package:tutorial/form_personal_details.dart';
-import 'package:tutorial/homepage.dart';
-//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
-import 'package:tutorial/user_auth.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/widgets/form_box.dart';
+import 'package:patient_inform/pages/auth/login_form.dart';
+import 'package:patient_inform/pages/auth/personal_form.dart';
+import 'package:patient_inform/pages/homepage.dart';
+import 'package:patient_inform/utils/user_auth.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});

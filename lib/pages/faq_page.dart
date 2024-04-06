@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/_themed_app_bar.dart';
-import 'package:tutorial/constants.dart';
+import 'package:patient_inform/widgets/themed_app_bar.dart';
+import 'package:patient_inform/utils/constants.dart';
 
 class FAQPage extends StatelessWidget {
   const FAQPage({super.key});

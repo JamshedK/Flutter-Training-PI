@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/_themed_app_bar.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/notifications.dart';
-import 'package:tutorial/current_visit_page.dart';
-import 'package:tutorial/profile_screen.dart';
-import 'package:tutorial/faq_page.dart';
+import 'package:patient_inform/widgets/themed_app_bar.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/pages/notifications.dart';
+import 'package:patient_inform/pages/current_visit_page.dart';
+import 'package:patient_inform/pages/profile_screen.dart';
+import 'package:patient_inform/pages/faq_page.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});

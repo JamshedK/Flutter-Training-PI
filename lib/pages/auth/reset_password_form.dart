@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_box.dart';
-import 'package:tutorial/form_helpers.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/widgets/form_box.dart';
+import 'package:patient_inform/widgets/form_helpers.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   const ResetPasswordForm({super.key});
@@ -84,8 +84,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               _emailError = '';
             });
           }
-          print(
-              'Sending email to: "${_emailController.text}"');
+          print('Sending email to: "${_emailController.text}"');
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),

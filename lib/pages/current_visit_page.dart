@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/_themed_app_bar.dart';
-import 'package:tutorial/current_visit_data.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/widgets/themed_app_bar.dart';
+import 'package:patient_inform/utils/current_visit_data.dart';
 
 // TODO: What are "unusual line terminators?" Should we care? - Daniel
 

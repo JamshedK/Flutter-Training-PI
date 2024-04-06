@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/auth/accountless_auth.dart';
-import 'package:tutorial/splash/button.dart';
+import 'package:patient_inform/pages/auth/accountless_form.dart';
+import 'package:patient_inform/pages/splash/button.dart';
 
 import 'track_er_screen.dart';
 

@@ -70,6 +70,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '997688084433',
     projectId: 'patient-inform',
     storageBucket: 'patient-inform.appspot.com',
-    iosBundleId: 'com.example.tutorial',
+    iosBundleId: 'com.example.patient_inform',
   );
 }

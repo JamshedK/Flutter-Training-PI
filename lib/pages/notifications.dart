@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
+import 'package:patient_inform/utils/constants.dart';
 
 class NotificationData {
   const NotificationData({
