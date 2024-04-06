@@ -12,7 +12,20 @@
           "package_name": "com.example.patient_inform"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "997688084433-68vpacji0bgspbq2dtlhcpaahoplas6h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tutorial",
+            "certificate_hash": "bc5e6a4f6409faf01aa08fe11bb37f7815542fc3"
+          }
+        },
+        {
+          "client_id": "997688084433-qiahs2fdcekq042vg9k7dl7mebo58v7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB-BZOS1H7Brnh1qXCezjM4Iva4eSlxlOU"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997688084433-qiahs2fdcekq042vg9k7dl7mebo58v7d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "997688084433-glj1htthi67fle1ss6qpses87n34irt4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tutorial"
+              }
+            }
+          ]
         }
       }
     }
