@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
+import 'package:patient_inform/utils/constants.dart';
 
 class FormBox extends StatefulWidget {
   const FormBox({
@@ -18,7 +18,6 @@ class FormBox extends StatefulWidget {
   final TextEditingController? controller;
 
   final TextInputType keyboardType;
-  //final TextInputFormatter inputFormatters;
 
   @override
   State<FormBox> createState() => FormBoxState();
@@ -37,7 +36,7 @@ class FormBoxState extends State<FormBox> {
       padding: const EdgeInsets.all(12),
       child: TextField(
         controller: widget.controller,
-        keyboardType: widget.keyboardType, //! DY: NEW
+        keyboardType: widget.keyboardType,
         obscureText: widget.obscureText && _isCurrentlyObscured,
         style: const TextStyle(
           color: primaryColor,

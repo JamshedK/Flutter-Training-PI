@@ -1,41 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_box.dart';
-import 'package:tutorial/form_example.dart';
-import 'package:tutorial/form_helpers.dart';
-import 'package:tutorial/form_reset_password.dart';
-import 'package:tutorial/homepage.dart';
-import 'package:tutorial/user_auth.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/widgets/form_box.dart';
+import 'package:patient_inform/pages/auth/signup_form.dart';
+import 'package:patient_inform/widgets/form_helpers.dart';
+import 'package:patient_inform/pages/homepage.dart';
+import 'package:patient_inform/utils/user_auth.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class AccountlessAuth extends StatefulWidget {
+  const AccountlessAuth({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<AccountlessAuth> createState() => _AccountlessAuthState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _AccountlessAuthState extends State<AccountlessAuth> {
   @override
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
+    _idController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _idController.dispose();
 
     super.dispose();
   }
 
-  late final TextEditingController _emailController;
-  late final TextEditingController _passwordController;
+  late final TextEditingController _idController;
 
-  String _emailError = '';
-  String _passwordError = '';
+  String _idError = '';
 
   var authHandler = UserAuth();
 
@@ -53,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               Image.asset('assets/logo.png'),
               const Text(
-                'Login to Account',
+                'Fast Authentication',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: primaryColor,
@@ -63,27 +58,21 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               const Text(
-                'Fill in the information below to login',
+                'Enter your MRN or last 4 digits of SSN.',
                 style: TextStyle(color: primaryColor, fontSize: 16),
               ),
               const SizedBox(height: 32),
               FormBox(
-                icon: Icons.email_outlined,
-                hintText: 'Email',
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              ...FormHelpers.checkError(_emailError),
-              const SizedBox(height: 16),
-              FormBox(
-                icon: Icons.lock_outline_rounded,
-                hintText: 'Password',
+                icon: Icons.person,
+                hintText: 'MRN or SSN',
+                controller: _idController,
                 obscureText: true,
-                controller: _passwordController,
-                keyboardType: TextInputType.visiblePassword,
+                keyboardType: TextInputType.number,
               ),
+              ...FormHelpers.checkError(_idError),
+              const SizedBox(height: 24),
+
               //TODO: Add Empty Password Error
-              _forgotPasswordRow,
               _createLoginButton,
               const SizedBox(height: 24),
               const Text(
@@ -105,35 +94,17 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget get _createLoginButton => TextButton(
         onPressed: () async {
-          //TODO: Revisit error handling for email and password
-          if (_emailController.text.isEmpty &&
-              _passwordController.text.isEmpty) {
+          if (_idController.text.isEmpty) {
             setState(() {
-              _emailError = 'Email cannot be empty';
-              _passwordError = 'Password cannot be empty';
-            });
-            return;
-          } else if (_emailController.text.isEmpty) {
-            setState(() {
-              _emailError = 'Email cannot be empty';
-              _passwordError = '';
-            });
-            return;
-          } else if (_passwordController.text.isEmpty) {
-            setState(() {
-              _passwordError = 'Password cannot be empty';
-              _emailError = '';
+              _idError = 'Field cannot be empty';
             });
             return;
           }
           setState(() {
-            _emailError = '';
-            _passwordError = '';
+            _idError = '';
           });
-
           try {
-            final user = await authHandler.handleSignInEmail(
-                _emailController.text, _passwordController.text);
+            final user = await authHandler.handleFastAuth(_idController.text);
             if (!mounted) {
               return;
             }
@@ -143,7 +114,9 @@ class _LoginFormState extends State<LoginForm> {
               (Route<dynamic> route) => false,
             );
           } catch (e) {
-            print(e);
+            setState(() {
+              _idError = 'Invalid MRN or SSN';
+            });
           }
         },
         style: ButtonStyle(
@@ -251,32 +224,6 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             child: const Text('Sign up'),
-          ),
-        ],
-      );
-
-  Widget get _forgotPasswordRow => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          TextButton(
-            onPressed: () {
-              print('oopsie');
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return const ResetPasswordForm();
-              }));
-            },
-            style: ButtonStyle(
-              foregroundColor:
-                  MaterialStateProperty.all(const Color(0xFF0E0E0E)),
-              textStyle: MaterialStateProperty.all(
-                const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            child: const Text('Forgot your password?'),
           ),
         ],
       );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/splash/button.dart';
+import 'package:patient_inform/pages/auth/accountless_form.dart';
+import 'package:patient_inform/pages/splash/button.dart';
 
 import 'track_er_screen.dart';
 
@@ -24,6 +25,17 @@ class _SplashScreenState extends State<SplashScreen> {
               const Spacer(flex: 5),
               Image.asset('assets/logo.png'),
               const Spacer(flex: 2),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: MostlyRoundedButton(
+                  buttonText: 'Scan',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return const AccountlessAuth();
+                    }));
+                  },
+                ),
+              ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: MostlyRoundedButton(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_example.dart';
-import 'package:tutorial/splash/button.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/pages/auth/signup_form.dart';
+import 'package:patient_inform/pages/splash/button.dart';
 
 // TODO: Add email sending by making email address tappable
 
@@ -58,7 +58,7 @@ class HavingTroubleScreen extends StatelessWidget {
         Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'We want to know about it. Please send an email to support@patientinform.com and we will be in contact shortly.',
+              'We want to know about it. Please send an email to support@patient_inform.com and we will be in contact shortly.',
               style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,

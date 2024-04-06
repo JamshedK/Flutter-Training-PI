@@ -1,42 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_box.dart';
-import 'package:tutorial/form_login.dart';
-import 'package:tutorial/form_personal_details.dart';
-//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
-import 'package:tutorial/user_auth.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/widgets/form_box.dart';
+import 'package:patient_inform/pages/auth/signup_form.dart';
+import 'package:patient_inform/widgets/form_helpers.dart';
+import 'package:patient_inform/pages/auth/reset_password_form.dart';
+import 'package:patient_inform/pages/homepage.dart';
+import 'package:patient_inform/utils/user_auth.dart';
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({super.key});
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _LoginFormState extends State<LoginForm> {
   @override
   void initState() {
     super.initState();
 
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _confirmPasswordController = TextEditingController();
   }
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
 
     super.dispose();
   }
 
-  late TextEditingController _emailController;
-  late TextEditingController _passwordController;
-  late TextEditingController _confirmPasswordController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
 
   String _emailError = '';
+  String _passwordError = '';
+
   var authHandler = UserAuth();
 
   @override
@@ -53,7 +53,7 @@ class _SignUpFormState extends State<SignUpForm> {
             children: [
               Image.asset('assets/logo.png'),
               const Text(
-                'Create Account',
+                'Login to Account',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: primaryColor,
@@ -63,7 +63,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ),
               const Text(
-                'Fill in the information below to sign up',
+                'Fill in the information below to login',
                 style: TextStyle(color: primaryColor, fontSize: 16),
               ),
               const SizedBox(height: 32),
@@ -73,13 +73,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
-              if (_emailError.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                Text(
-                  _emailError,
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ],
+              ...FormHelpers.checkError(_emailError),
               const SizedBox(height: 16),
               FormBox(
                 icon: Icons.lock_outline_rounded,
@@ -88,37 +82,20 @@ class _SignUpFormState extends State<SignUpForm> {
                 controller: _passwordController,
                 keyboardType: TextInputType.visiblePassword,
               ),
-              const SizedBox(height: 16),
-              FormBox(
-                icon: Icons.lock_outline_rounded,
-                hintText: 'Confirm Password',
-                obscureText: true,
-                controller: _confirmPasswordController,
-                keyboardType: TextInputType.visiblePassword,
-              ),
-              const SizedBox(height: 16),
-              if (_passwordController.text !=
-                  _confirmPasswordController.text) ...[
-                const Text(
-                  'Passwords do not match',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
-                ),
-                const SizedBox(height: 16),
-              ],
-              _createSignUpButton(
-                  context, _emailController, _passwordController),
-              const SizedBox(height: 32),
+              //TODO: Add Empty Password Error
+              _forgotPasswordRow,
+              _createLoginButton,
+              const SizedBox(height: 24),
               const Text(
                 'Or Continue With',
                 textAlign: TextAlign.center,
                 style:
                     TextStyle(fontSize: 14, color: primaryColor, height: 1.5),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
               _createWithSocialRow,
-              const SizedBox(height: 48),
-              _alreadyHaveAccountRow,
-              _skipButton(context, _emailController, _passwordController),
+              const SizedBox(height: 12),
+              _dontHaveAccountRow,
             ],
           ),
         ),
@@ -126,56 +103,45 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  Widget _skipButton(context, emailController, passwordController) =>
-      TextButton(
-        onPressed: () {
-          print('skip everything and go straight to homepage');
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return const Homepage();
-          }));
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(primaryColor),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
-        child: const Padding(
-          padding: EdgeInsets.all(16),
-          child: Text(
-            '[DEBUG] Go straight to homepage',
-            style: TextStyle(fontSize: 16, height: 1.5),
-          ),
-        ),
-      );
-
-  Widget _createSignUpButton(context, emailController, passwordController) =>
-      TextButton(
+  Widget get _createLoginButton => TextButton(
         onPressed: () async {
-          if (_emailController.text.isEmpty) {
+          //TODO: Revisit error handling for email and password
+          if (_emailController.text.isEmpty &&
+              _passwordController.text.isEmpty) {
             setState(() {
               _emailError = 'Email cannot be empty';
+              _passwordError = 'Password cannot be empty';
             });
-          } else {
+            return;
+          } else if (_emailController.text.isEmpty) {
             setState(() {
+              _emailError = 'Email cannot be empty';
+              _passwordError = '';
+            });
+            return;
+          } else if (_passwordController.text.isEmpty) {
+            setState(() {
+              _passwordError = 'Password cannot be empty';
               _emailError = '';
             });
+            return;
           }
+          setState(() {
+            _emailError = '';
+            _passwordError = '';
+          });
+
           try {
-            final user = await authHandler.handleSignUp(
-              emailController.text,
-              passwordController.text,
-            );
+            final user = await authHandler.handleSignInEmail(
+                _emailController.text, _passwordController.text);
             if (!mounted) {
               return;
             }
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return const PersonalForm();
-              //return const ResetPasswordForm();
-            }));
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute<void>(builder: (context) => const Homepage()),
+              (Route<dynamic> route) => false,
+            );
           } catch (e) {
             print(e);
           }
@@ -192,7 +158,7 @@ class _SignUpFormState extends State<SignUpForm> {
         child: const Padding(
           padding: EdgeInsets.all(16),
           child: Text(
-            'Sign Up',
+            'Login',
             style: TextStyle(fontSize: 16, height: 1.5),
           ),
         ),
@@ -202,7 +168,22 @@ class _SignUpFormState extends State<SignUpForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            onPressed: () => print('google'),
+            onPressed: () async {
+              try {
+                final user = await signInWithGoogle();
+                if (!mounted) {
+                  return;
+                }
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute<void>(
+                      builder: (context) => const Homepage()),
+                  (Route<dynamic> route) => false,
+                );
+              } catch (e) {
+                print(e);
+              }
+            },
             iconSize: 78,
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
@@ -241,12 +222,12 @@ class _SignUpFormState extends State<SignUpForm> {
         ],
       );
 
-  Widget get _alreadyHaveAccountRow => Row(
+  Widget get _dontHaveAccountRow => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'Already have an account?',
+            'Don\'t have an account?',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -254,9 +235,9 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           TextButton(
             onPressed: () {
-              print('sign in');
+              print('sign up');
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return const LoginForm();
+                return const SignUpForm();
               }));
             },
             style: ButtonStyle(
@@ -269,7 +250,33 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ),
             ),
-            child: const Text('Sign in'),
+            child: const Text('Sign up'),
+          ),
+        ],
+      );
+
+  Widget get _forgotPasswordRow => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () {
+              print('oopsie');
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return const ResetPasswordForm();
+              }));
+            },
+            style: ButtonStyle(
+              foregroundColor:
+                  MaterialStateProperty.all(const Color(0xFF0E0E0E)),
+              textStyle: MaterialStateProperty.all(
+                const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            child: const Text('Forgot your password?'),
           ),
         ],
       );

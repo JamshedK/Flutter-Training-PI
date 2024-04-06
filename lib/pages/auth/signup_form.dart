@@ -1,31 +1,43 @@
-class PersonalForm extends StatefulWidget {
-  const PersonalForm({super.key});
+import 'package:flutter/material.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/widgets/form_box.dart';
+import 'package:patient_inform/pages/auth/login_form.dart';
+import 'package:patient_inform/pages/auth/personal_form.dart';
+import 'package:patient_inform/pages/homepage.dart';
+import 'package:patient_inform/utils/user_auth.dart';
+
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
 
   @override
-  State<PersonalForm> createState() => _PersonalFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _PersonalFormState extends State<PersonalForm> {
+class _SignUpFormState extends State<SignUpForm> {
   @override
   void initState() {
     super.initState();
 
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
 
     super.dispose();
   }
 
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+  late TextEditingController _confirmPasswordController;
 
   String _emailError = '';
+  var authHandler = UserAuth();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +53,8 @@ class _PersonalFormState extends State<PersonalForm> {
             children: [
               Image.asset('assets/logo.png'),
               const Text(
-                'Enter Personal Details',
-                textAlign: TextAlign.center,
+                'Create Account',
+                textAlign: TextAlign.left,
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 26,
@@ -51,14 +63,15 @@ class _PersonalFormState extends State<PersonalForm> {
                 ),
               ),
               const Text(
-                'Enter personal information below',
+                'Fill in the information below to sign up',
                 style: TextStyle(color: primaryColor, fontSize: 16),
               ),
               const SizedBox(height: 32),
               FormBox(
                 icon: Icons.email_outlined,
                 hintText: 'Email',
-                controller: _firstNameController,
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
               ),
               if (_emailError.isNotEmpty) ...[
                 const SizedBox(height: 16),
@@ -72,25 +85,28 @@ class _PersonalFormState extends State<PersonalForm> {
                 icon: Icons.lock_outline_rounded,
                 hintText: 'Password',
                 obscureText: true,
-                controller: _lastNameController,
+                controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
               ),
               const SizedBox(height: 16),
-//              FormBox(
-//                icon: Icons.lock_outline_rounded,
-//                hintText: 'Confirm Password',
-//                obscureText: true,
-//                controller: _confirmPasswordController,
-//              ),
+              FormBox(
+                icon: Icons.lock_outline_rounded,
+                hintText: 'Confirm Password',
+                obscureText: true,
+                controller: _confirmPasswordController,
+                keyboardType: TextInputType.visiblePassword,
+              ),
               const SizedBox(height: 16),
-//              if (_lastNameController.text !=
-//                  _confirmPasswordController.text) ...[
-//                const Text(
-//                  'Passwords do not match',
-//                  style: TextStyle(color: Colors.red, fontSize: 16),
-//                ),
-//                const SizedBox(height: 16),
-//              ],
-              _createSignUpButton,
+              if (_passwordController.text !=
+                  _confirmPasswordController.text) ...[
+                const Text(
+                  'Passwords do not match',
+                  style: TextStyle(color: Colors.red, fontSize: 16),
+                ),
+                const SizedBox(height: 16),
+              ],
+              _createSignUpButton(
+                  context, _emailController, _passwordController),
               const SizedBox(height: 32),
               const Text(
                 'Or Continue With',
@@ -102,6 +118,7 @@ class _PersonalFormState extends State<PersonalForm> {
               _createWithSocialRow,
               const SizedBox(height: 48),
               _alreadyHaveAccountRow,
+              _skipButton(context, _emailController, _passwordController),
             ],
           ),
         ),
@@ -109,9 +126,36 @@ class _PersonalFormState extends State<PersonalForm> {
     );
   }
 
-  Widget get _createSignUpButton => TextButton(
+  Widget _skipButton(context, emailController, passwordController) =>
+      TextButton(
         onPressed: () {
-          if (_firstNameController.text.isEmpty) {
+          print('skip everything and go straight to homepage');
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return const Homepage();
+          }));
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(primaryColor),
+          foregroundColor: MaterialStateProperty.all(Colors.white),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(16),
+          child: Text(
+            '[DEBUG] Go straight to homepage',
+            style: TextStyle(fontSize: 16, height: 1.5),
+          ),
+        ),
+      );
+
+  Widget _createSignUpButton(context, emailController, passwordController) =>
+      TextButton(
+        onPressed: () {
+          if (_emailController.text.isEmpty) {
             setState(() {
               _emailError = 'Email cannot be empty';
             });
@@ -121,7 +165,21 @@ class _PersonalFormState extends State<PersonalForm> {
             });
           }
           print(
-              'first/last name: "${_firstNameController.text}"/"${_lastNameController.text}"');
+              'sign up with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+//!!!!!!!!!!!! Use this button for testing different screens (default: PersonalForm)
+            return const PersonalForm();
+            //return const ResetPasswordForm();
+          }));
+
+//           authHandler.handleSignInEmail(emailController.text, passwordController.text)
+//             .then<void>((User user) {
+//               Navigator.pushAndRemoveUntil(
+//                 context,
+//                 MaterialPageRoute<void>(builder: (context) => const PersonalForm()),
+//                 (Route<dynamic> route) => false,
+//               );
+//             }).catchError((e) => print(e));
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
@@ -198,6 +256,9 @@ class _PersonalFormState extends State<PersonalForm> {
           TextButton(
             onPressed: () {
               print('sign in');
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return const LoginForm();
+              }));
             },
             style: ButtonStyle(
               foregroundColor:

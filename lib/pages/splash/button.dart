@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../constants.dart';
-import 'package:tutorial/form_example.dart';
+import '../../utils/constants.dart';
+import 'package:patient_inform/pages/auth/signup_form.dart';
 
 class SkipButton extends StatelessWidget {
   const SkipButton({

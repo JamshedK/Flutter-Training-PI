@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../constants.dart';
+import '../../utils/constants.dart';
 import 'button.dart';
-import 'package:tutorial/splash/having_trouble_screen.dart';
+import 'package:patient_inform/pages/splash/having_trouble_screen.dart';
 
 class TrackErScreen extends StatelessWidget {
   const TrackErScreen({super.key});
@@ -18,7 +18,7 @@ class TrackErScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-            //TODO: Change Spacers into Sized Boxes, then add SingleChildScrollView
+              //TODO: Change Spacers into Sized Boxes, then add SingleChildScrollView
               const Spacer(flex: 2),
               Image.asset('assets/ER_Group.png'),
               const Spacer(flex: 1),

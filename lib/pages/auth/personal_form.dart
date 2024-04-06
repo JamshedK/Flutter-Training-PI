@@ -1,12 +1,8 @@
-//!! This might be deprecated.
-// Delete if still not in use after a while.
-
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_box.dart';
-import 'package:tutorial/form_helpers.dart';
-import 'package:tutorial/homepage.dart';
-// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/widgets/form_box.dart';
+import 'package:patient_inform/widgets/form_helpers.dart';
+import 'package:patient_inform/pages/homepage.dart';
 
 class PersonalForm extends StatefulWidget {
   const PersonalForm({super.key});

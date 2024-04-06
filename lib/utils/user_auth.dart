@@ -4,6 +4,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 class UserAuth {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  Future<User> handleFastAuth(identifier) async {
+    //TODO Implement SSN/MRN verification
+    bool isVerified = await verifySSN_MRN(identifier);
+    final User user;
+    if (!isVerified) {
+      throw Exception('SSN/MRN not verified');
+    } else {
+      UserCredential result = await auth.signInAnonymously();
+      user = result.user!;
+    }
+
+    return user;
+  }
+
   Future<User> handleSignInEmail(email, password) async {
     UserCredential result =
         await auth.signInWithEmailAndPassword(email: email, password: password);
@@ -36,6 +50,15 @@ class UserAuth {
 
     return user;
   }
+}
+
+// ignore: non_constant_identifier_names
+verifySSN_MRN(identifier) {
+  if (identifier == '123456') {
+    return true;
+  }
+
+  return false;
 }
 
 Future<User?> signInWithGoogle() async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tutorial/constants.dart';
-import 'package:tutorial/form_helpers.dart';
-import 'package:tutorial/scan_MRN.dart';
+import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/widgets/form_helpers.dart';
+import 'package:patient_inform/pages/scan_MRN.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
