@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patient_inform/visit_details.dart';
 import 'package:patient_inform/widgets/themed_app_bar.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/pages/notifications.dart';
@@ -205,8 +206,10 @@ class _HomeScreen1State extends State<HomeScreen1> {
         const SizedBox(height: 20),
         TextButton(
           onPressed: () {
-            // TODO: add Navigation to VisitDetails page
-            print('check details');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => VisitDetailsPage()),
+            );
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -343,12 +346,10 @@ class _HomeScreen1State extends State<HomeScreen1> {
                         fontWeight: FontWeight.w500)),
                 TextButton(
                   onPressed: () {
-                    // TODO: add navigation to VisitDetails page
-                    print('view details');
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const VisitDetailsTest()));
+                      context,
+                      MaterialPageRoute(builder: (_) => VisitDetailsPage()),
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(primaryColor),
