@@ -18,17 +18,17 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
   void initState() {
     super.initState();
 
-    _idController = TextEditingController();
+    _phoneController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _idController.dispose();
+    _phoneController.dispose();
 
     super.dispose();
   }
 
-  late final TextEditingController _idController;
+  late final TextEditingController _phoneController;
 
   String _idError = '';
 
@@ -58,16 +58,16 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
                 ),
               ),
               const Text(
-                'Enter your MRN or last 4 digits of SSN.',
+                'Enter your phone number.',
                 style: TextStyle(color: primaryColor, fontSize: 16),
               ),
               const SizedBox(height: 32),
               FormBox(
-                icon: Icons.person,
-                hintText: 'MRN or SSN',
-                controller: _idController,
-                obscureText: true,
-                keyboardType: TextInputType.number,
+                icon: Icons.phone,
+                hintText: '000-000-0000',
+                controller: _phoneController,
+                obscureText: false,
+                keyboardType: TextInputType.phone,
               ),
               ...FormHelpers.checkError(_idError),
               const SizedBox(height: 24),
@@ -94,7 +94,7 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
 
   Widget get _createLoginButton => TextButton(
         onPressed: () async {
-          if (_idController.text.isEmpty) {
+          if (_phoneController.text.isEmpty) {
             setState(() {
               _idError = 'Field cannot be empty';
             });
@@ -104,7 +104,8 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
             _idError = '';
           });
           try {
-            final user = await authHandler.handleFastAuth(_idController.text);
+            final user =
+                await authHandler.handleFastAuth(_phoneController.text);
             if (!mounted) {
               return;
             }
@@ -131,7 +132,7 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
         child: const Padding(
           padding: EdgeInsets.all(16),
           child: Text(
-            'Login',
+            'Continue',
             style: TextStyle(fontSize: 16, height: 1.5),
           ),
         ),
