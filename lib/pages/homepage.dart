@@ -47,20 +47,20 @@ class _HomepageState extends State<Homepage> {
             NavigationDestination(
               selectedIcon: Image.asset("assets/navbar/currvisit_clicked.png",
                   scale: 1.5),
-              icon: Image.asset("assets/navbar/currvisit.png",
+              icon: Image.asset("assets/navbar/CURRVISIT.png",
                   scale: 1.5), // Badge(child: Icon(Icons.notifications_sharp)),
               label: 'Current Visit',
             ),
             NavigationDestination(
               selectedIcon:
                   Image.asset("assets/navbar/history_clicked.png", scale: 1.5),
-              icon: Image.asset("assets/navbar/history.png", scale: 1.5),
+              icon: Image.asset("assets/navbar/HISTORY.png", scale: 1.5),
               label: 'History',
             ),
             NavigationDestination(
               selectedIcon:
                   Image.asset("assets/navbar/profile_clicked.png", scale: 1.5),
-              icon: Image.asset("assets/navbar/profile.png", scale: 1.5),
+              icon: Image.asset("assets/navbar/PROFILE.png", scale: 1.5),
               label: 'Profile',
             ),
           ],
