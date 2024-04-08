@@ -1,46 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:patient_inform/pages/auth/verification_code_page.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/widgets/form_box.dart';
 import 'package:patient_inform/pages/auth/signup_form.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/homepage.dart';
 import 'package:patient_inform/utils/user_auth.dart';
-import 'package:patient_inform/utils/format_phonenum.dart';
 
-class AccountlessAuth extends StatefulWidget {
-  const AccountlessAuth({super.key});
+class VerficationCodePage extends StatefulWidget {
+  final String verificationId;
+  const VerficationCodePage({super.key, required this.verificationId});
 
   @override
-  State<AccountlessAuth> createState() => _AccountlessAuthState();
+  State<VerficationCodePage> createState() => _VerficationCodePageState();
 }
 
-class _AccountlessAuthState extends State<AccountlessAuth> {
+class _VerficationCodePageState extends State<VerficationCodePage> {
   @override
   void initState() {
     super.initState();
 
-    _phoneController = TextEditingController();
-    _phoneController.addListener(() {
-      final formattedNumber = formatPhoneNumber(_phoneController.text);
-      _phoneController.value = TextEditingValue(
-        text: formattedNumber,
-        selection: TextSelection.collapsed(offset: formattedNumber.length),
-      );
-    });
+    _codeController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _phoneController.dispose();
+    _codeController.dispose();
 
     super.dispose();
   }
 
-  late final TextEditingController _phoneController;
+  late final TextEditingController _codeController;
 
-  String _phoneError = '';
-  String verificationId = '';
+  String _codeError = '';
 
   var authHandler = UserAuth();
 
@@ -58,7 +49,7 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
             children: [
               Image.asset('assets/logo.png'),
               const Text(
-                'Fast Authentication',
+                'Verification Code',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: primaryColor,
@@ -68,18 +59,18 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
                 ),
               ),
               const Text(
-                'Enter your phone number.',
+                'Enter the verification code sent to your phone number.',
                 style: TextStyle(color: primaryColor, fontSize: 16),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
               FormBox(
-                icon: Icons.phone,
-                hintText: '000-000-0000',
-                controller: _phoneController,
+                icon: Icons.numbers,
+                hintText: '000000',
+                controller: _codeController,
                 obscureText: false,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.number,
               ),
-              ...FormHelpers.checkError(_phoneError),
+              ...FormHelpers.checkError(_codeError),
               const SizedBox(height: 24),
 
               //TODO: Add Empty Password Error
@@ -104,32 +95,31 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
 
   Widget get _createLoginButton => TextButton(
         onPressed: () async {
-          if (_phoneController.text.isEmpty) {
+          if (_codeController.text.isEmpty) {
             setState(() {
-              _phoneError = 'Field cannot be empty';
+              _codeError = 'Field cannot be empty';
             });
             return;
           }
           setState(() {
-            _phoneError = '';
+            _codeError = '';
           });
           try {
-            verificationId =
-                await authHandler.sendVerificationCode(_phoneController.text);
+            final user = await authHandler.signInWithPhoneNumber(
+                widget.verificationId, _codeController.text);
             if (!mounted) {
               return;
             }
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => VerficationCodePage(
-                  verificationId: verificationId,
-                ),
+                builder: (context) => const Homepage(),
               ),
             );
           } catch (e) {
+            print(e);
             setState(() {
-              _phoneError = 'Invalid phone number. Please try again.';
+              _codeError = 'Invalid verification code. Please try again.';
             });
           }
         },

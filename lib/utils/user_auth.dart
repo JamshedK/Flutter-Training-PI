@@ -1,21 +1,61 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:libphonenumber/libphonenumber.dart';
 
 class UserAuth {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<User> handleFastAuth(identifier) async {
-    //TODO Implement SSN/MRN verification
-    bool isVerified = await verifySSN_MRN(identifier);
-    final User user;
-    if (!isVerified) {
-      throw Exception('SSN/MRN not verified');
-    } else {
-      UserCredential result = await auth.signInAnonymously();
-      user = result.user!;
+  Future<String> sendVerificationCode(phoneNumber) async {
+    bool isVerified = await verifyPhoneNumber(phoneNumber);
+
+    try {
+      phoneNumber = await PhoneNumberUtil.normalizePhoneNumber(
+        phoneNumber: phoneNumber,
+        isoCode: 'US',
+      );
+      phoneNumber = phoneNumber.substring(0, 2) +
+          " " +
+          phoneNumber.substring(2, 5) +
+          " " +
+          phoneNumber.substring(5, 8) +
+          " " +
+          phoneNumber.substring(8, 12);
+    } catch (e) {
+      print(e);
     }
 
-    return user;
+    if (!isVerified) {
+      throw Exception('Phone number is incorrect.');
+    }
+
+    String _verificationId = '';
+    phoneNumber = '+1 405 555 7665';
+
+    auth.setSettings(appVerificationDisabledForTesting: true);
+    auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseException e) {
+          print(e.message);
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          _verificationId = verificationId;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {});
+
+    return _verificationId;
+  }
+
+  Future<User?> signInWithPhoneNumber(verificationId, smsCode) async {
+    UserCredential result = await auth.signInWithCredential(
+      PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      ),
+    );
+    return result.user;
   }
 
   Future<User> handleSignInEmail(email, password) async {
@@ -27,9 +67,6 @@ class UserAuth {
   }
 
   Future<User?> handleSignUp(email, password) async {
-    // UserCredential result = await auth.createUserWithEmailAndPassword(
-    //     email: email, password: password);
-    // final User user = result.user!;
     late final User? user;
     try {
       final UserCredential result =
@@ -52,12 +89,10 @@ class UserAuth {
   }
 }
 
-// ignore: non_constant_identifier_names
-verifySSN_MRN(identifier) {
-  if (identifier == '123456') {
+verifyPhoneNumber(phoneNumber) {
+  if (phoneNumber == '(405) 555-7665') {
     return true;
   }
-
   return false;
 }
 
