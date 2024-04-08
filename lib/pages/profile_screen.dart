@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/utils/database.dart';
+import 'package:patient_inform/utils/patient_records.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/scan_MRN.dart';
 
@@ -15,10 +18,35 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
 
-    _firstNameController = TextEditingController(text: "John");
-    _lastNameController = TextEditingController(text: "Doe");
-    _emailController = TextEditingController(text: "JohnDoe@gmail.com");
-    _phoneNumberController = TextEditingController(text: "333-000-9020");
+    // Initialize the controllers with empty values
+    _firstNameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _emailController = TextEditingController();
+    _phoneNumberController = TextEditingController();
+
+    // Fetch the user info from the database.
+    _databaseService.getPatientData().listen(
+      (snapshot) {
+        if (snapshot.docs.isNotEmpty) {
+          // TODO: We assume there is only one document for the current user; could be changed.
+          PatientRecords patientRecord =
+              snapshot.docs.first.data() as PatientRecords;
+          setState(() {
+            _firstNameController =
+                TextEditingController(text: patientRecord.firstName ?? '');
+            _lastNameController =
+                TextEditingController(text: patientRecord.lastName ?? '');
+            _emailController =
+                TextEditingController(text: patientRecord.emailAddress ?? '');
+            _phoneNumberController =
+                TextEditingController(text: patientRecord.cellNumber ?? '');
+          });
+        }
+      },
+      onError: (error) {
+        print('Error fetching patient data: $error');
+      },
+    );
   }
 
   @override
@@ -35,6 +63,9 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController _lastNameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneNumberController;
+
+  // Initalize the database service used for getting the data to the profile screen.
+  final DatabaseService _databaseService = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
