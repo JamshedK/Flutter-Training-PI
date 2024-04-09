@@ -24,8 +24,6 @@ class TrackErScreen extends StatelessWidget {
               const Spacer(flex: 1),
               _textFields,
               const Spacer(flex: 2),
-              _buttonRow(context),
-              const Spacer(flex: 4),
             ],
           ),
         ),

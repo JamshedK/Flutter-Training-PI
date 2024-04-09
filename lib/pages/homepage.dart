@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patient_inform/pages/splash/having_trouble_screen.dart';
 import 'package:patient_inform/visit_details.dart';
 import 'package:patient_inform/widgets/themed_app_bar.dart';
 import 'package:patient_inform/utils/constants.dart';
@@ -40,7 +41,7 @@ class _HomepageState extends State<Homepage> {
             NavigationDestination(
               selectedIcon:
                   Image.asset("assets/navbar/home_clicked.png", scale: 1.5),
-              icon: Image.asset("assets/navbar/home.png",
+              icon: Image.asset("assets/navbar/HOME.png",
                   scale: 1.5), // Icon(Icons.home_outlined),
               label: 'Home',
             ),
@@ -59,7 +60,7 @@ class _HomepageState extends State<Homepage> {
             ),
             NavigationDestination(
               selectedIcon:
-                  Image.asset("assets/navbar/profile_clicked.png", scale: 1.5),
+                  Image.asset("assets/navbar/PROFILE_CLICKED.png", scale: 1.5),
               icon: Image.asset("assets/navbar/PROFILE.png", scale: 1.5),
               label: 'Profile',
             ),
@@ -122,6 +123,15 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 print('notification');
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return const NotificationsPage();
+                }));
+              }),
+          IconButton(
+              icon: const Icon(Icons.help_outline_rounded,
+                  color: primaryColor, size: 32),
+              onPressed: () {
+                print('having trouble?');
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return const HavingTroubleScreen();
                 }));
               }),
           IconButton(
