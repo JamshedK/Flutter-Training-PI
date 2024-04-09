@@ -65,6 +65,8 @@ class _ScanMRNState extends State<ScanMRN> {
               const SizedBox(height: 32),
               // TODO: Implement QR code reader
               _scanMRNButton,
+              const SizedBox(height: 12),
+              _skipMRNButton,
             ],
           ),
         ),
@@ -93,6 +95,18 @@ class _ScanMRNState extends State<ScanMRN> {
             'Scan MRN',
             style: TextStyle(fontSize: 16, height: 1.5),
           ),
+        ),
+      );
+
+  Widget get _skipMRNButton => TextButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return const Homepage();
+          }));
+        },
+        child: const Text(
+          'Not checked into the ER? Skip this step.',
+          style: TextStyle(color: primaryColor, fontSize: 16),
         ),
       );
 }
