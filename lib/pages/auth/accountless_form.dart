@@ -7,6 +7,7 @@ import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/homepage.dart';
 import 'package:patient_inform/utils/user_auth.dart';
 import 'package:patient_inform/utils/format_phonenum.dart';
+import 'package:provider/provider.dart';
 
 class AccountlessAuth extends StatefulWidget {
   const AccountlessAuth({super.key});
@@ -41,8 +42,8 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
 
   String _phoneError = '';
   String verificationId = '';
-
-  var authHandler = UserAuth();
+  late final authHandler = Provider.of<UserPhoneAuth>(context, listen: false);
+  var authHandler2 = UserAuth();
 
   @override
   Widget build(BuildContext context) {
@@ -114,17 +115,14 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
             _phoneError = '';
           });
           try {
-            verificationId =
-                await authHandler.sendVerificationCode(_phoneController.text);
+            authHandler.sendVerificationCode(_phoneController.text);
             if (!mounted) {
               return;
             }
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => VerficationCodePage(
-                  verificationId: verificationId,
-                ),
+                builder: (context) => VerficationCodePage(),
               ),
             );
           } catch (e) {
@@ -157,7 +155,7 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
           IconButton(
             onPressed: () async {
               try {
-                final user = await signInWithGoogle();
+                final user = await authHandler2.signInWithGoogle();
                 if (!mounted) {
                   return;
                 }

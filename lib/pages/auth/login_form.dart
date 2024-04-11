@@ -170,7 +170,7 @@ class _LoginFormState extends State<LoginForm> {
           IconButton(
             onPressed: () async {
               try {
-                final user = await signInWithGoogle();
+                final user = await authHandler.signInWithGoogle();
                 if (!mounted) {
                   return;
                 }

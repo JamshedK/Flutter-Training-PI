@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/widgets/form_box.dart';
@@ -5,10 +7,10 @@ import 'package:patient_inform/pages/auth/signup_form.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/homepage.dart';
 import 'package:patient_inform/utils/user_auth.dart';
+import 'package:provider/provider.dart';
 
 class VerficationCodePage extends StatefulWidget {
-  final String verificationId;
-  const VerficationCodePage({super.key, required this.verificationId});
+  const VerficationCodePage({super.key});
 
   @override
   State<VerficationCodePage> createState() => _VerficationCodePageState();
@@ -33,7 +35,8 @@ class _VerficationCodePageState extends State<VerficationCodePage> {
 
   String _codeError = '';
 
-  var authHandler = UserAuth();
+  late final authHandler = Provider.of<UserPhoneAuth>(context);
+  var authHandler2 = UserAuth();
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +45,42 @@ class _VerficationCodePageState extends State<VerficationCodePage> {
         iconTheme: const IconThemeData(color: primaryColor),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(32),
+        padding:
+            const EdgeInsets.only(left: 32, right: 32, top: 20, bottom: 32),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (authHandler.isSendingSMS) ...[
+                const Column(children: [
+                  Text(
+                    'Sending SMS Code ',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      height: 1.5,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  CircularProgressIndicator.adaptive(
+                      valueColor: AlwaysStoppedAnimation(primaryColor)),
+                ]),
+                const SizedBox(height: 16),
+              ],
+              if (!authHandler.isSendingSMS) ...[
+                const Text(
+                  'Code Sent!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    height: 1.5,
+                  ),
+                )
+              ],
               Image.asset('assets/logo.png'),
               const Text(
                 'Verification Code',
@@ -106,7 +140,7 @@ class _VerficationCodePageState extends State<VerficationCodePage> {
           });
           try {
             final user = await authHandler.signInWithPhoneNumber(
-                widget.verificationId, _codeController.text);
+                authHandler.verificationId, _codeController.text);
             if (!mounted) {
               return;
             }
@@ -147,7 +181,7 @@ class _VerficationCodePageState extends State<VerficationCodePage> {
           IconButton(
             onPressed: () async {
               try {
-                final user = await signInWithGoogle();
+                final user = await authHandler2.signInWithGoogle();
                 if (!mounted) {
                   return;
                 }
