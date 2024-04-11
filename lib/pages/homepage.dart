@@ -21,10 +21,9 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // TODO: navigate to correct pages
         body: switch (currentPageIndex) {
           1 => const CurrentVisitPage(),
-          2 => const PastVisitsPage(), // TODO this should be a HistoryPage()
+          2 => const PastVisitsPage(),
           3 => const ProfilePage(),
           _ => const HomeScreen1(),
         },
@@ -48,7 +47,7 @@ class _HomepageState extends State<Homepage> {
               selectedIcon: Image.asset("assets/navbar/currvisit_clicked.png",
                   scale: 1.5),
               icon: Image.asset("assets/navbar/currvisit.png",
-                  scale: 1.5), // Badge(child: Icon(Icons.notifications_sharp)),
+                  scale: 1.5),
               label: 'Current Visit',
             ),
             NavigationDestination(
@@ -206,8 +205,10 @@ class _HomeScreen1State extends State<HomeScreen1> {
         const SizedBox(height: 20),
         TextButton(
           onPressed: () {
-            // TODO: add Navigation to VisitDetails page
-            print('check details');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => VisitDetailsPage()),
+            );
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -344,12 +345,10 @@ class _HomeScreen1State extends State<HomeScreen1> {
                         fontWeight: FontWeight.w500)),
                 TextButton(
                   onPressed: () {
-                    // TODO: add navigation to VisitDetails page
-                    print('view details');
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const VisitDetailsPage()));
+                      context,
+                      MaterialPageRoute(builder: (_) => VisitDetailsPage()),
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(primaryColor),

@@ -154,7 +154,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Widget _createSignUpButton(context, emailController, passwordController) =>
       TextButton(
-        onPressed: () {
+        onPressed: () async {
           if (_emailController.text.isEmpty) {
             setState(() {
               _emailError = 'Email cannot be empty';
@@ -166,9 +166,20 @@ class _SignUpFormState extends State<SignUpForm> {
           }
           print(
               'sign up with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return const PersonalForm();
-          }));
+          try {
+            final user = await authHandler.handleSignUp(
+              emailController.text,
+              passwordController.text,
+            );
+            if (!mounted) {
+              return;
+            }
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return const PersonalForm();
+            }));
+          } catch (e) {
+            print(e);
+          }
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(primaryColor),
