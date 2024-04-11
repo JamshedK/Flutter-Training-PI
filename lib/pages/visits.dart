@@ -90,46 +90,51 @@ class PastVisit extends StatelessWidget {
                   color: Color(0XFF494949),
                   fontWeight: FontWeight.bold),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Time spent",
-                      style: TextStyle(
-                          fontSize: 14,
-                          height: 1.5,
-                          color: Color(0XFF494949),
-                          fontStyle: FontStyle.italic),
-                    ),
-                    Text(
-                      visitData.timeSpent,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          height: 1.5,
-                          color: Color(0XFF494949),
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                TextButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 0)),
-                      foregroundColor:
-                          MaterialStateProperty.all(Colors.white),
-                      backgroundColor: const MaterialStatePropertyAll(primaryColor),
-                      textStyle: MaterialStateProperty.all(
-                        const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+            const SizedBox(height: 8),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Time spent",
+                        style: TextStyle(
+                            fontSize: 14,
+                            height: 1.5,
+                            color: Color(0XFF494949),
+                            fontStyle: FontStyle.italic),
+                      ),
+                      Text(
+                        visitData.timeSpent,
+                        style: const TextStyle(
+                            fontSize: 14,
+                            height: 1.5,
+                            color: Color(0XFF494949),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 25, vertical: 0)),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        backgroundColor: const MaterialStatePropertyAll(primaryColor),
+                        textStyle: MaterialStateProperty.all(
+                          const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    child: const Text("View Details"))
-              ],
+                      child: const Text("View Details"))
+                ],
+              ),
             )
           ],
         ));
