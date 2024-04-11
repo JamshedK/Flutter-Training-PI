@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:patient_inform/pages/visits.dart';
 import 'package:patient_inform/widgets/themed_app_bar.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/pages/notifications.dart';
 import 'package:patient_inform/pages/current_visit_page.dart';
 import 'package:patient_inform/pages/profile_screen.dart';
+import 'package:patient_inform/pages/visit_details.dart';
 import 'package:patient_inform/pages/faq_page.dart';
 
 class Homepage extends StatefulWidget {
@@ -21,10 +23,9 @@ class _HomepageState extends State<Homepage> {
       home: Scaffold(
         // TODO: navigate to correct pages
         body: switch (currentPageIndex) {
-          1 =>
-            const CurrentVisitPage(), // TODO 1 => const Navigator(child: const CurrentVisitPage()),
-          2 => const FAQPage(), // TODO this should be a HistoryPage()
-          3 => const ProfilePage(), // TODO this should be the profile page
+          1 => const CurrentVisitPage(),
+          2 => const PastVisitsPage(), // TODO this should be a HistoryPage()
+          3 => const ProfilePage(),
           _ => const HomeScreen1(),
         },
         bottomNavigationBar: NavigationBar(
@@ -348,7 +349,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => const VisitDetailsTest()));
+                            builder: (_) => const VisitDetailsPage()));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(primaryColor),
@@ -372,26 +373,45 @@ class _HomeScreen1State extends State<HomeScreen1> {
       ));
 }
 
-class HomeScreen2 extends StatelessWidget {
-  const HomeScreen2({super.key});
+class PastVisitsPage extends StatelessWidget {
+  const PastVisitsPage({super.key});
+
+  final _items = const [
+    PastVisit(
+      visitData: VisitData(
+        date: "2/20/2024",
+        reasonForVisit: "knee pain",
+        medications: "pills",
+        timeSpent: "1 hour",
+      ),
+    ),
+    PastVisit(
+      visitData: VisitData(
+        date: "2/21/2024",
+        reasonForVisit: "knee pain again",
+        medications: "more pills",
+        timeSpent: "1 hour 30 min",
+      ),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: const [Icon(Icons.notification_add), Icon(Icons.menu)],
-        backgroundColor: primaryColor,
-        title: RichText(
-          text: const TextSpan(
-            children: [
-              TextSpan(text: "Welcome back,\n"),
-              TextSpan(text: "Daniel"),
-            ],
-          ),
+        appBar: ThemedAppBar(
+          title: 'Past Visits History',
+          context: context,
         ),
-      ),
-      body: const Text("Page 2"),
-    );
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: ListView.separated(
+            separatorBuilder: (_, __) => const SizedBox(
+              height: 16,
+            ),
+            itemCount: _items.length,
+            itemBuilder: (_, index) => _items[index],
+          ),
+        ));
   }
 }
 
@@ -429,20 +449,20 @@ Widget get _createMRNButton => TextButton(
           )),
     );
 
-class VisitDetailsTest extends StatelessWidget {
-  const VisitDetailsTest({super.key});
+// class VisitDetailsTest extends StatelessWidget {
+//   const VisitDetailsTest({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ThemedAppBar(
-        title: "visit details!!",
-        context: context,
-      ),
-      body: const Placeholder(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: ThemedAppBar(
+//         title: "visit details!!",
+//         context: context,
+//       ),
+//       body: const Placeholder(),
+//     );
+//   }
+// }
 
 /// Leads to the notifcations page.
 /// Creates instances of notifcations and renderes them onto the page.
@@ -458,11 +478,11 @@ class NotificationsPage extends StatelessWidget {
     PastNotification(
         notificationData: NotificationData(
             timeOfDay: "05:00 P.M.",
-            reasonOfNotification: "Hello, I am under the water.")),
+            reasonOfNotification: "A triage nurse is ready to see you.")),
     PastNotification(
         notificationData: NotificationData(
             timeOfDay: "09:32 P.M.",
-            reasonOfNotification: "Hello World, 2. Coming, 2025.")),
+            reasonOfNotification: "Your blood test results have returned.")),
     PastNotification(
         notificationData: NotificationData(
             timeOfDay: "10:30 P.M.",
