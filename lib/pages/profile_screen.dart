@@ -6,6 +6,8 @@ import 'package:patient_inform/utils/patient_records.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/scan_MRN.dart';
 
+const String PATIENT_RECORDS_COLLECTION_REF = "patient-records";
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -65,7 +67,34 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController _phoneNumberController;
 
   // Initalize the database service used for getting the data to the profile screen.
-  final DatabaseService _databaseService = DatabaseService();
+  final DatabaseService _databaseService =
+      DatabaseService(PATIENT_RECORDS_COLLECTION_REF);
+
+  void _updatePatientData() {
+    // Fetch the existing patient record from Firestore
+    _databaseService.getPatientData().first.then((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        PatientRecords existingPatientRecord =
+            snapshot.docs.first.data() as PatientRecords;
+
+        // Create a new PatientRecords object with updated data
+        PatientRecords updatedPatientRecord = PatientRecords(
+          age: existingPatientRecord.age,
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          emailAddress: _emailController.text,
+          cellNumber: _phoneNumberController.text,
+          insuranceCarrier: existingPatientRecord.insuranceCarrier,
+          recentVisits:
+              existingPatientRecord.recentVisits, // Keep recentVisits the same
+        );
+
+        // Update the patient data in Firestore
+        _databaseService.updatePatientData(
+            snapshot.docs.first.id, updatedPatientRecord);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,16 +167,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            _updatePatientData();
+                          },
+                          child: const Text("Update Data.")),
                       // Add some space between the icon and text
-                      Text(
+                      const Text(
                         'Scan Your MRN',
                         style: TextStyle(fontSize: 16, height: 1.5),
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.camera_alt),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.camera_alt),
                     ],
                   ),
                 ),
@@ -174,6 +208,7 @@ List<Widget> buildInputBox(TextEditingController controller, String hintText) {
     const SizedBox(height: 16),
   ];
 }
+
 
 
 // TODO: Review this.

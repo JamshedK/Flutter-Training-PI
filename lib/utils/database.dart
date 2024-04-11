@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:patient_inform/utils/patient_records.dart';
 
 const String PATIENT_RECORDS_COLLECTION_REF = "patient-records";
+const String NOTIFICATIONS_RECORDS_COLLECTION_REF = "notifications-record";
 
 class DatabaseService {
   // Create an instance of firestore.
@@ -12,14 +13,12 @@ class DatabaseService {
   late final CollectionReference _patientDataRef;
 
   // Constructor.
-  DatabaseService() {
+  DatabaseService(ref) {
     // Using the instance, grabs the collection with the ID, and converts the output data into the dictonary we specified in our patient records structure.
-    _patientDataRef = _firestore
-        .collection(PATIENT_RECORDS_COLLECTION_REF)
-        .withConverter<PatientRecords>(
-            fromFirestore: (snapshots, _) =>
-                PatientRecords.fromJson(snapshots.data()!),
-            toFirestore: (patientRecord, _) => patientRecord.toJson());
+    _patientDataRef = _firestore.collection(ref).withConverter<PatientRecords>(
+        fromFirestore: (snapshots, _) =>
+            PatientRecords.fromJson(snapshots.data()!),
+        toFirestore: (patientRecord, _) => patientRecord.toJson());
   }
 
   // Get the patient data from the database.
