@@ -60,7 +60,7 @@ class _HomepageState extends State<Homepage> {
             ),
             NavigationDestination(
               selectedIcon:
-                  Image.asset("assets/navbar/PROFILE_CLICKED.png", scale: 1.5),
+                  Image.asset("assets/navbar/profile_clicked.png", scale: 1.5),
               icon: Image.asset("assets/navbar/PROFILE.png", scale: 1.5),
               label: 'Profile',
             ),
