@@ -24,8 +24,6 @@ class HavingTroubleScreen extends StatelessWidget {
               const Spacer(flex: 4),
               _textFields,
               const Spacer(flex: 6),
-              _buttonRow(context),
-              const Spacer(flex: 2),
             ],
           ),
         ),
