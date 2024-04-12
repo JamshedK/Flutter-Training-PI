@@ -1,48 +1,41 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:patient_inform/pages/auth/verification_code_page.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/widgets/form_box.dart';
 import 'package:patient_inform/pages/auth/signup_form.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/homepage.dart';
 import 'package:patient_inform/utils/user_auth.dart';
-import 'package:patient_inform/utils/format_phonenum.dart';
 import 'package:provider/provider.dart';
 
-class AccountlessAuth extends StatefulWidget {
-  const AccountlessAuth({super.key});
+class VerficationCodePage extends StatefulWidget {
+  const VerficationCodePage({super.key});
 
   @override
-  State<AccountlessAuth> createState() => _AccountlessAuthState();
+  State<VerficationCodePage> createState() => _VerficationCodePageState();
 }
 
-class _AccountlessAuthState extends State<AccountlessAuth> {
+class _VerficationCodePageState extends State<VerficationCodePage> {
   @override
   void initState() {
     super.initState();
 
-    _phoneController = TextEditingController();
-    _phoneController.addListener(() {
-      final formattedNumber = formatPhoneNumber(_phoneController.text);
-      _phoneController.value = TextEditingValue(
-        text: formattedNumber,
-        selection: TextSelection.collapsed(offset: formattedNumber.length),
-      );
-    });
+    _codeController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _phoneController.dispose();
+    _codeController.dispose();
 
     super.dispose();
   }
 
-  late final TextEditingController _phoneController;
+  late final TextEditingController _codeController;
 
-  String _phoneError = '';
-  String verificationId = '';
-  late final authHandler = Provider.of<UserPhoneAuth>(context, listen: false);
+  String _codeError = '';
+
+  late final authHandler = Provider.of<UserPhoneAuth>(context);
   var authHandler2 = UserAuth();
 
   @override
@@ -52,14 +45,45 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
         iconTheme: const IconThemeData(color: primaryColor),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(32),
+        padding:
+            const EdgeInsets.only(left: 32, right: 32, top: 20, bottom: 32),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (authHandler.isSendingSMS) ...[
+                const Column(children: [
+                  Text(
+                    'Sending SMS Code ',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      height: 1.5,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  CircularProgressIndicator.adaptive(
+                      valueColor: AlwaysStoppedAnimation(primaryColor)),
+                ]),
+                const SizedBox(height: 16),
+              ],
+              if (!authHandler.isSendingSMS) ...[
+                const Text(
+                  'Code Sent!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    height: 1.5,
+                  ),
+                )
+              ],
               Image.asset('assets/logo.png'),
               const Text(
-                'Fast Authentication',
+                'Verification Code',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: primaryColor,
@@ -69,18 +93,18 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
                 ),
               ),
               const Text(
-                'Enter your phone number.',
+                'Enter the verification code sent to your phone number.',
                 style: TextStyle(color: primaryColor, fontSize: 16),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
               FormBox(
-                icon: Icons.phone,
-                hintText: '000-000-0000',
-                controller: _phoneController,
+                icon: Icons.numbers,
+                hintText: '000000',
+                controller: _codeController,
                 obscureText: false,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.number,
               ),
-              ...FormHelpers.checkError(_phoneError),
+              ...FormHelpers.checkError(_codeError),
               const SizedBox(height: 24),
 
               //TODO: Add Empty Password Error
@@ -105,29 +129,31 @@ class _AccountlessAuthState extends State<AccountlessAuth> {
 
   Widget get _createLoginButton => TextButton(
         onPressed: () async {
-          if (_phoneController.text.isEmpty) {
+          if (_codeController.text.isEmpty) {
             setState(() {
-              _phoneError = 'Field cannot be empty';
+              _codeError = 'Field cannot be empty';
             });
             return;
           }
           setState(() {
-            _phoneError = '';
+            _codeError = '';
           });
           try {
-            authHandler.sendVerificationCode(_phoneController.text);
+            final user = await authHandler.signInWithPhoneNumber(
+                authHandler.verificationId, _codeController.text);
             if (!mounted) {
               return;
             }
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => VerficationCodePage(),
+                builder: (context) => const Homepage(),
               ),
             );
           } catch (e) {
+            print(e);
             setState(() {
-              _phoneError = 'Invalid phone number. Please try again.';
+              _codeError = 'Invalid verification code. Please try again.';
             });
           }
         },
