@@ -6,7 +6,6 @@ import 'package:patient_inform/pages/notifications.dart';
 import 'package:patient_inform/pages/current_visit_page.dart';
 import 'package:patient_inform/pages/profile_screen.dart';
 import 'package:patient_inform/pages/visit_details.dart';
-import 'package:patient_inform/pages/faq_page.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -207,7 +206,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => VisitDetailsPage()),
+              MaterialPageRoute(builder: (_) => const VisitDetailsPage()),
             );
           },
           style: ButtonStyle(
@@ -347,7 +346,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => VisitDetailsPage()),
+                      MaterialPageRoute(builder: (_) => const VisitDetailsPage()),
                     );
                   },
                   style: ButtonStyle(
@@ -402,7 +401,7 @@ class PastVisitsPage extends StatelessWidget {
           context: context,
         ),
         body: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: ListView.separated(
             separatorBuilder: (_, __) => const SizedBox(
               height: 16,

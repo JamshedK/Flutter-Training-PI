@@ -121,7 +121,7 @@ class PastVisit extends StatelessWidget {
                       onPressed: () {},
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 25, vertical: 0)),
+                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 25, vertical: 0)),
                         foregroundColor:
                             MaterialStateProperty.all(Colors.white),
                         backgroundColor: const MaterialStatePropertyAll(primaryColor),
