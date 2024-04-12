@@ -7,9 +7,53 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:997688084433:android:5c8cfb7b42bab04f2182f0",
+        "mobilesdk_app_id": "1:997688084433:android:d1cbf700120c4b882182f0",
         "android_client_info": {
           "package_name": "com.example.patient_inform"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997688084433-cuo1ai0ttvdk2patumn5evp9rqltf1ou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.patient_inform",
+            "certificate_hash": "bc5e6a4f6409faf01aa08fe11bb37f7815542fc3"
+          }
+        },
+        {
+          "client_id": "997688084433-qiahs2fdcekq042vg9k7dl7mebo58v7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-BZOS1H7Brnh1qXCezjM4Iva4eSlxlOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997688084433-qiahs2fdcekq042vg9k7dl7mebo58v7d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "997688084433-gbcfe03e4juls70qrkkntu54da4hmgat.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.patient-inform"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997688084433:android:5c8cfb7b42bab04f2182f0",
+        "android_client_info": {
+          "package_name": "com.example.tutorial"
         }
       },
       "oauth_client": [
@@ -39,10 +83,10 @@
               "client_type": 3
             },
             {
-              "client_id": "997688084433-glj1htthi67fle1ss6qpses87n34irt4.apps.googleusercontent.com",
+              "client_id": "997688084433-gbcfe03e4juls70qrkkntu54da4hmgat.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.tutorial"
+                "bundle_id": "com.example.patient-inform"
               }
             }
           ]
