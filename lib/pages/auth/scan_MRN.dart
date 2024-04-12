@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:patient_inform/pages/auth/accountless_form.dart';
 import 'package:patient_inform/utils/constants.dart';
-import 'package:patient_inform/widgets/form_box.dart';
-import 'package:patient_inform/pages/auth/signup_form.dart';
-import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/homepage.dart';
 import 'package:patient_inform/utils/user_auth.dart';
 
@@ -77,7 +75,7 @@ class _ScanMRNState extends State<ScanMRN> {
   Widget get _scanMRNButton => TextButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return const Homepage();
+            return const AccountlessAuth();
           }));
         },
         style: ButtonStyle(

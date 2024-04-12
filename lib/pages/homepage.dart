@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_inform/pages/splash/having_trouble_screen.dart';
-import 'package:patient_inform/visit_details.dart';
+import 'package:patient_inform/pages/visit_details.dart';
 import 'package:patient_inform/widgets/themed_app_bar.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/pages/notifications.dart';

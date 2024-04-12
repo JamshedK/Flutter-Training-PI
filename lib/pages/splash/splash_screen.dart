@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:patient_inform/pages/auth/accountless_form.dart';
 import 'package:patient_inform/pages/auth/login_form.dart';
-import 'package:patient_inform/pages/splash/button.dart';
 import 'package:patient_inform/pages/auth/signup_form.dart';
 import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/pages/auth/Scan_MRN.dart';
 
 import 'track_er_screen.dart';
 
@@ -118,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget get _scanMRNButton => OutlinedButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return const AccountlessAuth();
+            return const ScanMRN();
           }));
         },
         style: ButtonStyle(
