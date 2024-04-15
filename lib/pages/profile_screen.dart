@@ -20,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
 
-    // Initialize the controllers with empty values
+    // Initialize the controllers with empty values.
     _firstNameController = TextEditingController();
     _lastNameController = TextEditingController();
     _emailController = TextEditingController();
@@ -167,24 +167,23 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            _updatePatientData();
-                          },
-                          child: const Text("Update Data.")),
                       // Add some space between the icon and text
-                      const Text(
+                      Text(
                         'Scan Your MRN',
                         style: TextStyle(fontSize: 16, height: 1.5),
                       ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.camera_alt),
+                      SizedBox(width: 8),
+                      Icon(Icons.camera_alt),
                     ],
                   ),
                 ),
+              ),
+              TextButton(
+                onPressed: _updatePatientData,
+                child: const Text('Save Changes'),
               ),
             ],
           ),
