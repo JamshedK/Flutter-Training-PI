@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/utils/database.dart';
 import 'package:patient_inform/utils/patient_records.dart';
+import 'package:patient_inform/utils/user_records.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/scan_MRN.dart';
-
-const String PATIENT_RECORDS_COLLECTION_REF = "patient-records";
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -16,6 +16,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  // Store the user ID.
+  final String? userID = FirebaseAuth.instance.currentUser?.uid;
+
+  // Database service to store the user data.
+  final DatabaseService<UserRecords> _databaseService =
+      DatabaseService<UserRecords>(
+    APPICATION_USERS_COLLECTION_REF,
+    fromFirestore: (snapshot, _) => UserRecords.fromJson(snapshot.data()!),
+    toFirestore: (userRecord, _) => userRecord.toJson(),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -27,21 +38,23 @@ class _ProfilePageState extends State<ProfilePage> {
     _phoneNumberController = TextEditingController();
 
     // Fetch the user info from the database.
-    _databaseService.getPatientData().listen(
+    _databaseService.getUserData(userID).listen(
       (snapshot) {
-        if (snapshot.docs.isNotEmpty) {
-          // TODO: We assume there is only one document for the current user; could be changed.
-          PatientRecords patientRecord =
-              snapshot.docs.first.data() as PatientRecords;
+        if (snapshot.exists) {
+          // Get the specific user data.
+          userRecord = snapshot.data() as UserRecords;
+          print(userRecord);
+
+          // Set the state on the input fields, if applicable.
           setState(() {
             _firstNameController =
-                TextEditingController(text: patientRecord.firstName ?? '');
+                TextEditingController(text: userRecord.firstName ?? '');
             _lastNameController =
-                TextEditingController(text: patientRecord.lastName ?? '');
+                TextEditingController(text: userRecord.lastName ?? '');
             _emailController =
-                TextEditingController(text: patientRecord.emailAddress ?? '');
+                TextEditingController(text: userRecord.emailAddress ?? '');
             _phoneNumberController =
-                TextEditingController(text: patientRecord.cellNumber ?? '');
+                TextEditingController(text: userRecord.cellNumber ?? '');
           });
         }
       },
@@ -57,43 +70,29 @@ class _ProfilePageState extends State<ProfilePage> {
     _lastNameController.dispose();
     _emailController.dispose();
     _phoneNumberController.dispose();
-
     super.dispose();
   }
 
+  // Controllers and User-Record.
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneNumberController;
-
-  // Initalize the database service used for getting the data to the profile screen.
-  final DatabaseService _databaseService =
-      DatabaseService(PATIENT_RECORDS_COLLECTION_REF);
+  late UserRecords userRecord;
 
   void _updatePatientData() {
-    // Fetch the existing patient record from Firestore
-    _databaseService.getPatientData().first.then((snapshot) {
-      if (snapshot.docs.isNotEmpty) {
-        PatientRecords existingPatientRecord =
-            snapshot.docs.first.data() as PatientRecords;
+    // Create a new PatientRecords object with updated data (that is applicable).
+    UserRecords updatedUserRecord = UserRecords(
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      emailAddress: _emailController.text,
+      cellNumber: _phoneNumberController.text,
+      dateOfBirth: userRecord.dateOfBirth,
+      firebaseID: userRecord.firebaseID,
+    );
 
-        // Create a new PatientRecords object with updated data
-        PatientRecords updatedPatientRecord = PatientRecords(
-          age: existingPatientRecord.age,
-          firstName: _firstNameController.text,
-          lastName: _lastNameController.text,
-          emailAddress: _emailController.text,
-          cellNumber: _phoneNumberController.text,
-          insuranceCarrier: existingPatientRecord.insuranceCarrier,
-          recentVisits:
-              existingPatientRecord.recentVisits, // Keep recentVisits the same
-        );
-
-        // Update the patient data in Firestore
-        _databaseService.updatePatientData(
-            snapshot.docs.first.id, updatedPatientRecord);
-      }
-    });
+    // Update the data in the database, if applicable.
+    _databaseService.updateData(userID, updatedUserRecord);
   }
 
   @override
@@ -207,8 +206,6 @@ List<Widget> buildInputBox(TextEditingController controller, String hintText) {
     const SizedBox(height: 16),
   ];
 }
-
-
 
 // TODO: Review this.
 // class _ProfileColumn extends StatelessWidget {

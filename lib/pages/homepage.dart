@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:patient_inform/utils/database.dart';
+import 'package:patient_inform/utils/user_records.dart';
 import 'package:patient_inform/visit_details.dart';
 import 'package:patient_inform/widgets/themed_app_bar.dart';
 import 'package:patient_inform/utils/constants.dart';
@@ -6,6 +10,16 @@ import 'package:patient_inform/pages/notifications.dart';
 import 'package:patient_inform/pages/current_visit_page.dart';
 import 'package:patient_inform/pages/profile_screen.dart';
 import 'package:patient_inform/pages/faq_page.dart';
+
+// Store the user data.
+final String? userID = FirebaseAuth.instance.currentUser?.uid;
+// Database service to store the user data.
+final DatabaseService<UserRecords> _databaseService =
+    DatabaseService<UserRecords>(
+  APPICATION_USERS_COLLECTION_REF,
+  fromFirestore: (snapshot, _) => UserRecords.fromJson(snapshot.data()!),
+  toFirestore: (userRecord, _) => userRecord.toJson(),
+);
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -102,19 +116,51 @@ class _HomeScreen1State extends State<HomeScreen1> {
 
   AppBar get _homePageAppBar => AppBar(
         centerTitle: false,
-        title: RichText(
-          text: const TextSpan(
-            style: TextStyle(color: primaryTextColor, fontSize: 14),
-            children: [
-              //TODO: when user is signed in, get their name from the database
-              TextSpan(text: 'Welcome Back,\n'),
-              TextSpan(
-                  text: 'Daniel',
-                  style: TextStyle(
-                      height: 1.5, fontWeight: FontWeight.bold, fontSize: 22)),
-            ],
-          ),
+        title: StreamBuilder(
+          stream: _databaseService.getUserData(userID),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+
+            // Store the user's data.
+            var userRecord = snapshot.data!.data()! as UserRecords;
+            var firstName = userRecord.firstName;
+
+            // Return the heading with the correct first name.
+            return RichText(
+              text: TextSpan(
+                style: const TextStyle(color: primaryTextColor, fontSize: 14),
+                children: [
+                  //TODO: when user is signed in, get their name from the database
+                  const TextSpan(text: 'Welcome Back,\n'),
+                  TextSpan(
+                      text: firstName,
+                      style: const TextStyle(
+                          height: 1.5,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22)),
+                ],
+              ),
+            );
+          },
         ),
+        // RichText(
+        //   text: const TextSpan(
+        //     style: TextStyle(color: primaryTextColor, fontSize: 14),
+        //     children: [
+        //       //TODO: when user is signed in, get their name from the database
+        //       TextSpan(text: 'Welcome Back,\n'),
+        //       TextSpan(
+        //           text: 'Daniel',
+        //           style: TextStyle(
+        //               height: 1.5, fontWeight: FontWeight.bold, fontSize: 22)),
+        //     ],
+        //   ),
+        // ),
         actions: [
           IconButton(
               icon: Image.asset('assets/homepage_notif_bell.png'),
@@ -380,20 +426,19 @@ class HomeScreen2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: const [Icon(Icons.notification_add), Icon(Icons.menu)],
-        backgroundColor: primaryColor,
-        title: RichText(
-          text: const TextSpan(
-            children: [
-              TextSpan(text: "Welcome back,\n"),
-              TextSpan(text: "Daniel"),
-            ],
-          ),
-        ),
-      ),
-      body: const Text("Page 2"),
+          actions: const [Icon(Icons.notification_add), Icon(Icons.menu)],
+          backgroundColor: primaryColor,
+          title: RichText(
+            text: const TextSpan(
+              children: [
+                TextSpan(text: "Welcome back,\n"),
+                TextSpan(text: "Daniel"),
+              ],
+            ),
+          )),
     );
   }
+  // body: const Text("Page 2"),
 }
 
 Widget get _createMRNButton => TextButton(
@@ -516,3 +561,6 @@ class NotificationsPage extends StatelessWidget {
     );
   }
 }
+
+
+/// Gets the current user's name that is logged in.

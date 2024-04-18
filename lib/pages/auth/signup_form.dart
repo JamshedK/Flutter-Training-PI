@@ -37,6 +37,7 @@ class _SignUpFormState extends State<SignUpForm> {
   late TextEditingController _confirmPasswordController;
 
   String _emailError = '';
+  String _passwordError = '';
   var authHandler = UserAuth();
 
   @override
@@ -97,16 +98,15 @@ class _SignUpFormState extends State<SignUpForm> {
                 keyboardType: TextInputType.visiblePassword,
               ),
               const SizedBox(height: 16),
-              if (_passwordController.text !=
-                  _confirmPasswordController.text) ...[
-                const Text(
-                  'Passwords do not match',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
+              if (_passwordError.isNotEmpty) ...[
+                Text(
+                  _passwordError,
+                  style: const TextStyle(color: Colors.red, fontSize: 16),
                 ),
                 const SizedBox(height: 16),
               ],
-              _createSignUpButton(
-                  context, _emailController, _passwordController),
+              _createSignUpButton(context, _emailController,
+                  _passwordController, _confirmPasswordController),
               const SizedBox(height: 32),
               const Text(
                 'Or Continue With',
@@ -152,18 +152,34 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
       );
 
-  Widget _createSignUpButton(context, emailController, passwordController) =>
+  Widget _createSignUpButton(context, emailController, passwordController,
+          confirmPasswordController) =>
       TextButton(
         onPressed: () async {
           if (_emailController.text.isEmpty) {
             setState(() {
-              _emailError = 'Email cannot be empty';
+              _emailError = 'Email cannot be empty.';
             });
+            return;
           } else {
             setState(() {
               _emailError = '';
             });
           }
+
+          // TODO: New added by Ameer, to handle bug for confirm password.
+          if (_passwordController.text != _confirmPasswordController.text) {
+            setState(() {
+              _passwordError = ' Passwords must be the same.';
+            });
+
+            return;
+          } else {
+            setState(() {
+              _passwordError = '';
+            });
+          }
+
           print(
               'sign up with password: "${_passwordController.text}"/"${_confirmPasswordController.text}"');
           try {
