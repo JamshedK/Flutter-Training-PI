@@ -6,6 +6,7 @@ import 'package:patient_inform/pages/notifications.dart';
 import 'package:patient_inform/pages/current_visit_page.dart';
 import 'package:patient_inform/pages/profile_screen.dart';
 import 'package:patient_inform/pages/visit_details.dart';
+import 'package:patient_inform/pages/past_visits.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -371,47 +372,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
       ));
 }
 
-class PastVisitsPage extends StatelessWidget {
-  const PastVisitsPage({super.key});
 
-  final _items = const [
-    PastVisit(
-      visitData: VisitData(
-        date: "2/20/2024",
-        reasonForVisit: "knee pain",
-        medications: "pills",
-        timeSpent: "1 hour",
-      ),
-    ),
-    PastVisit(
-      visitData: VisitData(
-        date: "2/21/2024",
-        reasonForVisit: "knee pain again",
-        medications: "more pills",
-        timeSpent: "1 hour 30 min",
-      ),
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: ThemedAppBar(
-          title: 'Past Visits History',
-          context: context,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView.separated(
-            separatorBuilder: (_, __) => const SizedBox(
-              height: 16,
-            ),
-            itemCount: _items.length,
-            itemBuilder: (_, index) => _items[index],
-          ),
-        ));
-  }
-}
 
 Widget get _createMRNButton => TextButton(
       onPressed: () async {
