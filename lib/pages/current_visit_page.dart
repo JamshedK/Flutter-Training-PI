@@ -4,6 +4,9 @@ import 'package:patient_inform/widgets/themed_app_bar.dart';
 import 'package:patient_inform/utils/current_visit_data.dart';
 import 'package:patient_inform/utils/circle_and_lines_painter.dart';
 
+/*
+CurrentVisitPage calls CurrentVisitEvent & CurrentVisitData (separate file)
+*/
 class CurrentVisitPage extends StatelessWidget {
   static const _currentVisits = [
     CurrentVisitData(
@@ -83,6 +86,9 @@ class CurrentVisitPage extends StatelessWidget {
   }
 }
 
+/*
+CurrentVisitEvent calls CurrentVisitData & CirclePainter
+*/
 class CurrentVisitEvent extends StatelessWidget {
   const CurrentVisitEvent({
     super.key,
@@ -97,7 +103,6 @@ class CurrentVisitEvent extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Row(
-        // TODO: check if this is required after implementing
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CustomPaint(
