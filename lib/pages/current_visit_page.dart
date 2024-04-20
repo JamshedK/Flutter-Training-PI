@@ -1,12 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/widgets/themed_app_bar.dart';
 import 'package:patient_inform/utils/current_visit_data.dart';
+import 'package:patient_inform/utils/circle_and_lines_painter.dart';
 
-// TODO: What are "unusual line terminators?" Should we care? - Daniel
-
+/*
+CurrentVisitPage calls CurrentVisitEvent & CurrentVisitData (separate file)
+*/
 class CurrentVisitPage extends StatelessWidget {
   static const _currentVisits = [
     CurrentVisitData(
@@ -86,6 +86,9 @@ class CurrentVisitPage extends StatelessWidget {
   }
 }
 
+/*
+CurrentVisitEvent calls CurrentVisitData & CirclePainter
+*/
 class CurrentVisitEvent extends StatelessWidget {
   const CurrentVisitEvent({
     super.key,
@@ -100,11 +103,10 @@ class CurrentVisitEvent extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Row(
-        // TODO: check if this is required after implementing
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CustomPaint(
-            painter: _CircleAndLinesPainter(hasCircleOnly: isLastEvent),
+            painter: CircleAndLinesPainter(hasCircleOnly: isLastEvent),
             child: const SizedBox(width: 16),
           ),
           const SizedBox(width: 16),
@@ -140,35 +142,4 @@ class CurrentVisitEvent extends StatelessWidget {
   }
 }
 
-class _CircleAndLinesPainter extends CustomPainter {
-  const _CircleAndLinesPainter({
-    this.hasCircleOnly = false,
-  });
 
-  final bool hasCircleOnly;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = primaryColor;
-    canvas.drawCircle(
-        Offset(size.width / 2, size.width / 2), size.width / 2, paint);
-
-    if (hasCircleOnly) return;
-
-    double heightOffset = size.width + 8;
-    while (heightOffset < size.height) {
-      canvas.drawRect(
-          Rect.fromPoints(
-            Offset(size.width / 2 - 0.5, heightOffset),
-            Offset(size.width / 2 + 0.5, min(heightOffset + 16, size.height)),
-          ),
-          paint);
-      heightOffset += 24;
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-}
