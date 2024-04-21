@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/utils/database.dart';
+import 'package:patient_inform/utils/patient_records.dart';
+import 'package:patient_inform/utils/user_records.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/scan_MRN.dart';
 
@@ -11,14 +16,52 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  // Store the user ID.
+  final String? userID = FirebaseAuth.instance.currentUser?.uid;
+
+  // Database service to store the user data.
+  final DatabaseService<UserRecords> _databaseService =
+      DatabaseService<UserRecords>(
+    APPICATION_USERS_COLLECTION_REF,
+    fromFirestore: (snapshot, _) => UserRecords.fromJson(snapshot.data()!),
+    toFirestore: (userRecord, _) => userRecord.toJson(),
+  );
+
   @override
   void initState() {
     super.initState();
 
-    _firstNameController = TextEditingController(text: "John");
-    _lastNameController = TextEditingController(text: "Doe");
-    _emailController = TextEditingController(text: "JohnDoe@gmail.com");
-    _phoneNumberController = TextEditingController(text: "333-000-9020");
+    // Initialize the controllers with empty values.
+    _firstNameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _emailController = TextEditingController();
+    _phoneNumberController = TextEditingController();
+
+    // Fetch the user info from the database.
+    _databaseService.getUserData(userID).listen(
+      (snapshot) {
+        if (snapshot.exists) {
+          // Get the specific user data.
+          userRecord = snapshot.data() as UserRecords;
+          print(userRecord);
+
+          // Set the state on the input fields, if applicable.
+          setState(() {
+            _firstNameController =
+                TextEditingController(text: userRecord.firstName ?? '');
+            _lastNameController =
+                TextEditingController(text: userRecord.lastName ?? '');
+            _emailController =
+                TextEditingController(text: userRecord.emailAddress ?? '');
+            _phoneNumberController =
+                TextEditingController(text: userRecord.cellNumber ?? '');
+          });
+        }
+      },
+      onError: (error) {
+        print('Error fetching patient data: $error');
+      },
+    );
   }
 
   @override
@@ -27,14 +70,30 @@ class _ProfilePageState extends State<ProfilePage> {
     _lastNameController.dispose();
     _emailController.dispose();
     _phoneNumberController.dispose();
-
     super.dispose();
   }
 
+  // Controllers and User-Record.
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneNumberController;
+  late UserRecords userRecord;
+
+  void _updatePatientData() {
+    // Create a new PatientRecords object with updated data (that is applicable).
+    UserRecords updatedUserRecord = UserRecords(
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      emailAddress: _emailController.text,
+      cellNumber: _phoneNumberController.text,
+      dateOfBirth: userRecord.dateOfBirth,
+      firebaseID: userRecord.firebaseID,
+    );
+
+    // Update the data in the database, if applicable.
+    _databaseService.updateData(userID, updatedUserRecord);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +180,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
+              TextButton(
+                onPressed: _updatePatientData,
+                child: const Text('Save Changes'),
+              ),
             ],
           ),
         ),
@@ -143,7 +206,6 @@ List<Widget> buildInputBox(TextEditingController controller, String hintText) {
     const SizedBox(height: 16),
   ];
 }
-
 
 // TODO: Review this.
 // class _ProfileColumn extends StatelessWidget {

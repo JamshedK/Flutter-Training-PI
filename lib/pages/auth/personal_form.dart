@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
+import 'package:patient_inform/utils/database.dart';
+import 'package:patient_inform/utils/user_records.dart';
 import 'package:patient_inform/widgets/form_box.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/homepage.dart';
@@ -35,6 +38,14 @@ class _PersonalFormState extends State<PersonalForm> {
 
     super.dispose();
   }
+
+  // Database service to store the user data.
+  final DatabaseService<UserRecords> _databaseService =
+      DatabaseService<UserRecords>(
+    APPICATION_USERS_COLLECTION_REF,
+    fromFirestore: (snapshot, _) => UserRecords.fromJson(snapshot.data()!),
+    toFirestore: (userRecord, _) => userRecord.toJson(),
+  );
 
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
@@ -170,9 +181,25 @@ class _PersonalFormState extends State<PersonalForm> {
           if (allClear) {
             print(
                 'First/last name: "${_firstNameController.text}"/"${_lastNameController.text}"');
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return const Homepage();
-            }));
+
+            // Grab the users' email and ID.
+            String? emailAddress = FirebaseAuth.instance.currentUser?.email;
+            String? ID = FirebaseAuth.instance.currentUser?.uid;
+
+            // Push the account info into the the 'app-user' collection.
+            if (emailAddress != null && ID != null) {
+              _databaseService.addData(UserRecords(
+                  firstName: _firstNameController.text,
+                  lastName: _lastNameController.text,
+                  emailAddress: emailAddress,
+                  cellNumber: _mobileNumberController.text,
+                  dateOfBirth: _dateOfBirthController.text,
+                  firebaseID: ID));
+
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return const Homepage();
+              }));
+            }
           }
         },
         style: ButtonStyle(
@@ -193,3 +220,6 @@ class _PersonalFormState extends State<PersonalForm> {
         ),
       );
 }
+
+
+// Alright, nice. THis is all working now. So, next up is when the user gets to the homescreen page, the top will say "Welcome back, {firstName}". I want to be able to pull that first name from the specific 
