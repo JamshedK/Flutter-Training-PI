@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:patient_inform/pages/faq_page.dart';
 import 'package:patient_inform/utils/database.dart';
 import 'package:patient_inform/utils/user_records.dart';
 import 'package:patient_inform/pages/splash/having_trouble_screen.dart';
@@ -93,7 +94,7 @@ class HomeScreen1 extends StatefulWidget {
 
 class _HomeScreen1State extends State<HomeScreen1> {
   // TODO: when timer is set up, add ternary conditional to return plurals (e.g. "Hours" instead of "Hour")
-  final List<String> timeUnits = ['Day', 'Hour', 'Min', 'Sec'];
+  final List<String> timeUnits = ['Hour', 'Min'];
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +177,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
               onPressed: () {
                 print('having trouble?');
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return const HavingTroubleScreen();
+                  return const FAQPage();
                 }));
               }),
           IconButton(
@@ -294,7 +295,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
       ),
       padding: const EdgeInsets.all(12),
       child: Column(children: [
-        const Text('Total Time Taken',
+        const Text('Estimated Wait Time',
             style: TextStyle(
                 color: primaryColor,
                 fontSize: 14,
@@ -303,7 +304,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            for (var i = 0; i < 4; ++i) ...[
+            for (var i = 0; i < 2; ++i) ...[
               Column(
                 children: [
                   Container(
@@ -327,7 +328,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                           fontWeight: FontWeight.w500))
                 ],
               ),
-              if (i != 3) ...[
+              if (i != 1) ...[
                 const SizedBox(width: 12),
                 const Column(
                   children: [
@@ -403,7 +404,8 @@ class _HomeScreen1State extends State<HomeScreen1> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const VisitDetailsPage()),
+                      MaterialPageRoute(
+                          builder: (_) => const VisitDetailsPage()),
                     );
                   },
                   style: ButtonStyle(
@@ -427,8 +429,6 @@ class _HomeScreen1State extends State<HomeScreen1> {
         ]),
       ));
 }
-
-
 
 Widget get _createMRNButton => TextButton(
       onPressed: () async {
