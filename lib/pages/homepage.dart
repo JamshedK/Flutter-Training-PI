@@ -126,13 +126,11 @@ class _HomeScreen1State extends State<HomeScreen1> {
             // Store the user's data.
             var userRecord = snapshot.data!.data()! as UserRecords;
             var firstName = userRecord.firstName;
-
-            // Return the heading with the correct first name.
+            
             return RichText(
               text: TextSpan(
                 style: const TextStyle(color: primaryTextColor, fontSize: 14),
                 children: [
-                  //TODO: when user is signed in, get their name from the database
                   const TextSpan(text: 'Welcome Back,\n'),
                   TextSpan(
                       text: firstName,

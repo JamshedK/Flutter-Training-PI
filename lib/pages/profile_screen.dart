@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/utils/database.dart';
-import 'package:patient_inform/utils/patient_records.dart';
 import 'package:patient_inform/utils/user_records.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/scan_MRN.dart';
@@ -152,11 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: 380,
                 height: 60,
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return const scanMRN();
-                    }));
-                  },
+                  onPressed: _updatePatientData,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(primaryColor),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -171,18 +165,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       // Add some space between the icon and text
                       Text(
-                        'Scan Your MRN',
+                        'Save Changes',
                         style: TextStyle(fontSize: 16, height: 1.5),
                       ),
                       SizedBox(width: 8),
-                      Icon(Icons.camera_alt),
                     ],
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: _updatePatientData,
-                child: const Text('Save Changes'),
               ),
             ],
           ),
@@ -206,30 +195,3 @@ List<Widget> buildInputBox(TextEditingController controller, String hintText) {
     const SizedBox(height: 16),
   ];
 }
-
-// TODO: Review this.
-// class _ProfileColumn extends StatelessWidget {
-//   const _ProfileColumn({
-//     required this.labels,
-//     required this.controllers,
-//   });
-
-//   final List<String> labels;
-//   final List<TextEditingController> controllers;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     assert(labels.length == controllers.length);
-
-//     return Column(
-//       children: [
-//         for (int i = 0; i < labels.length; ++i) ...[
-//           Text(labels[i]),
-//           const SizedBox(height: 8),
-//           buildInputBox(controllers[i]),
-//           const SizedBox(height: 16),
-//         ],
-//       ],
-//     );
-//   }
-// }
