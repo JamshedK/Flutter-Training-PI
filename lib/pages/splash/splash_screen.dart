@@ -88,9 +88,17 @@ class _SplashScreenState extends State<SplashScreen> {
             return const SignUpForm();
           }));
         },
-        child: const Text(
-          'Don\'t have an account? Sign up',
-          style: TextStyle(color: primaryTextColor, fontSize: 14),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Don\'t have an account?',
+                style: TextStyle(color: primaryTextColor, fontSize: 14)),
+            Text(' Sign up',
+                style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                ))
+          ],
         ),
       );
 
