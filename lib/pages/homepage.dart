@@ -91,6 +91,7 @@ class HomeScreen1 extends StatefulWidget {
 class _HomeScreen1State extends State<HomeScreen1> {
   // TODO: when timer is set up, add ternary conditional to return plurals (e.g. "Hours" instead of "Hour")
   final List<String> timeUnits = ['Hour', 'Min'];
+  final List<String> visitTimes = ['01', '45'];
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +127,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
             // Store the user's data.
             var userRecord = snapshot.data!.data()! as UserRecords;
             var firstName = userRecord.firstName;
-            
+
             return RichText(
               text: TextSpan(
                 style: const TextStyle(color: primaryTextColor, fontSize: 14),
@@ -296,8 +297,8 @@ class _HomeScreen1State extends State<HomeScreen1> {
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           color: primaryColor),
                       // TODO: create timer to get actual visit times
-                      child: const Text('00',
-                          style: TextStyle(
+                      child: Text(visitTimes[i],
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w500))),

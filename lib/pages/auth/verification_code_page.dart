@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/widgets/form_box.dart';
@@ -8,6 +6,8 @@ import 'package:patient_inform/widgets/form_helpers.dart';
 import 'package:patient_inform/pages/homepage.dart';
 import 'package:patient_inform/utils/user_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:patient_inform/utils/database.dart';
+import 'package:patient_inform/utils/user_records.dart';
 
 class VerficationCodePage extends StatefulWidget {
   const VerficationCodePage({super.key});
@@ -30,6 +30,13 @@ class _VerficationCodePageState extends State<VerficationCodePage> {
 
     super.dispose();
   }
+
+  final DatabaseService<UserRecords> _databaseService =
+      DatabaseService<UserRecords>(
+    APPICATION_USERS_COLLECTION_REF,
+    fromFirestore: (snapshot, _) => UserRecords.fromJson(snapshot.data()!),
+    toFirestore: (userRecord, _) => userRecord.toJson(),
+  );
 
   late final TextEditingController _codeController;
 
@@ -141,6 +148,17 @@ class _VerficationCodePageState extends State<VerficationCodePage> {
           try {
             final user = await authHandler.signInWithPhoneNumber(
                 authHandler.verificationId, _codeController.text);
+            if (_databaseService.getUserData(user?.uid) == null) {
+            _databaseService.addData(UserRecords(
+                firstName: 'Anonymous',
+                lastName: '',
+                emailAddress: '',
+                cellNumber: user?.phoneNumber ?? "000 000 0000",
+                dateOfBirth: "00/00/0000",
+                firebaseID: user!.uid));
+            } else {
+              print("User already exists");
+            }
             if (!mounted) {
               return;
             }

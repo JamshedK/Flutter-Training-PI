@@ -4,7 +4,6 @@ import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/utils/database.dart';
 import 'package:patient_inform/utils/user_records.dart';
 import 'package:patient_inform/widgets/form_helpers.dart';
-import 'package:patient_inform/pages/scan_MRN.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
