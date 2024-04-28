@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patient_inform/pages/faq_page.dart';
 import 'package:patient_inform/utils/database.dart';
 import 'package:patient_inform/utils/user_records.dart';
-import 'package:patient_inform/pages/splash/having_trouble_screen.dart';
-import 'package:patient_inform/pages/visits.dart';
-import 'package:patient_inform/widgets/themed_app_bar.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/pages/notifications.dart';
 import 'package:patient_inform/pages/current_visit_page.dart';
@@ -149,19 +145,6 @@ class _HomeScreen1State extends State<HomeScreen1> {
             );
           },
         ),
-        // RichText(
-        //   text: const TextSpan(
-        //     style: TextStyle(color: primaryTextColor, fontSize: 14),
-        //     children: [
-        //       //TODO: when user is signed in, get their name from the database
-        //       TextSpan(text: 'Welcome Back,\n'),
-        //       TextSpan(
-        //           text: 'Daniel',
-        //           style: TextStyle(
-        //               height: 1.5, fontWeight: FontWeight.bold, fontSize: 22)),
-        //     ],
-        //   ),
-        // ),
         actions: [
           IconButton(
               icon: Image.asset('assets/homepage_notif_bell.png'),

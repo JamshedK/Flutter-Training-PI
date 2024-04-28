@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patient_inform/utils/constants.dart';
 import 'package:patient_inform/widgets/form_box.dart';
+import 'package:patient_inform/utils/database.dart';
+import 'package:patient_inform/utils/user_records.dart';
 import 'package:patient_inform/pages/auth/login_form.dart';
 import 'package:patient_inform/pages/auth/personal_form.dart';
 import 'package:patient_inform/pages/homepage.dart';
@@ -31,6 +33,13 @@ class _SignUpFormState extends State<SignUpForm> {
 
     super.dispose();
   }
+
+  final DatabaseService<UserRecords> _databaseService =
+      DatabaseService<UserRecords>(
+    APPICATION_USERS_COLLECTION_REF,
+    fromFirestore: (snapshot, _) => UserRecords.fromJson(snapshot.data()!),
+    toFirestore: (userRecord, _) => userRecord.toJson(),
+  );
 
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
@@ -118,39 +127,12 @@ class _SignUpFormState extends State<SignUpForm> {
               _createWithSocialRow,
               const SizedBox(height: 48),
               _alreadyHaveAccountRow,
-              _skipButton(context, _emailController, _passwordController),
             ],
           ),
         ),
       ),
     );
   }
-
-  Widget _skipButton(context, emailController, passwordController) =>
-      TextButton(
-        onPressed: () {
-          print('skip everything and go straight to homepage');
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return const Homepage();
-          }));
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(primaryColor),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
-        child: const Padding(
-          padding: EdgeInsets.all(16),
-          child: Text(
-            '[DEBUG] Go straight to homepage',
-            style: TextStyle(fontSize: 16, height: 1.5),
-          ),
-        ),
-      );
 
   Widget _createSignUpButton(context, emailController, passwordController,
           confirmPasswordController) =>
@@ -219,7 +201,33 @@ class _SignUpFormState extends State<SignUpForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            onPressed: () => print('google'),
+            onPressed: () async {
+              try {
+                final user = await authHandler.signInWithGoogle();
+                if (_databaseService.getUserData(user?.uid) == null) {
+                  _databaseService.addData(UserRecords(
+                      firstName: user!.displayName!.split(" ")[0],
+                      lastName: user.displayName!.split(" ")[1],
+                      emailAddress: user.email!,
+                      cellNumber: user.phoneNumber ?? "000 000 0000",
+                      dateOfBirth: "00/00/0000",
+                      firebaseID: user.uid));
+                } else {
+                  print("User already exists");
+                }
+                if (!mounted) {
+                  return;
+                }
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute<void>(
+                      builder: (context) => const Homepage()),
+                  (Route<dynamic> route) => false,
+                );
+              } catch (e) {
+                print(e);
+              }
+            },
             iconSize: 78,
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
