@@ -1,7 +1,7 @@
 ## How to Run the App Locally on a Mac
 
 1. **Install Flutter:**
-   - Follow the installation guide [here]([https://docs.flutter.dev/get-started/install](https://docs.flutter.dev/get-started/install/macos/mobile-ios)).
+   - Follow the installation guide [here](https://docs.flutter.dev/get-started/install/macos/mobile-ios).
    - When asked to install a text editor, install Visual Studio Code since it's one of the easier IDEs
 
 2. **Install Git:**
